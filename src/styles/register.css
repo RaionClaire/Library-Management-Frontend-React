@@ -1,0 +1,217 @@
+/* === Reset dan Font === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+/* === Container Utama === */
+.register-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #5a4ff3; /* biru utama */
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* === Kiri: Sign Up Box === */
+.register-left {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 60px;
+  position: relative; /* tambahkan ini */
+}
+
+.signup-box {
+  width: 600px;
+  background-color: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: -40px;
+  position: relative; /* tambahkan */
+  z-index: 2; /* tambahkan */
+}
+
+/* === Judul === */
+.register-title {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #8b3a2b;
+  margin-bottom: 1rem;
+}
+
+/* === Form === */
+.form-group {
+  margin-bottom: 0.9rem;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+label span {
+  color: red;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+
+input:focus {
+  border-color: #5a4ff3;
+}
+
+/* Password */
+
+.password-input {
+  position: relative;
+}
+
+.password-wrapper svg:first-child {
+  display: none;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #777;
+}
+
+/* === Tombol Sign Up === */
+.signup-btn {
+  width: 100%;
+  background-color: #ff8356;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signup-btn:hover {
+  background-color: #ff6b3e;
+}
+
+/* === Link ke Login === */
+.login-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.login-link a {
+  color: #5a4ff3;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* === Kanan: Gambar dan Teks === */
+.register-right {
+  flex: 1;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  background-color: #5a4ff3;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 1.2rem;
+}
+
+.register-text {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+}
+
+.highlight {
+  color: #ff8356;
+}
+
+/* === Gambar Ilustrasi === */
+.gambarregister {
+  width: 350px;
+  height: auto;
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+}
+
+.gambarorange {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%; /* biar agak melebar */
+  z-index: 1;
+}
+
+/* === Responsif === */
+@media (max-width: 992px) {
+  .register-container {
+    flex-direction: column;
+  }
+
+  .register-left,
+  .register-right {
+    flex: unset;
+    width: 100%;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .signup-box {
+    width: 90%;
+    padding: 1.5rem 2rem;
+  }
+
+  .gambarregister {
+    width: 280px;
+  }
+
+  .register-text {
+    font-size: 1.5rem;
+  }
+}

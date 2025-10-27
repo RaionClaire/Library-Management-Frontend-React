@@ -1,0 +1,81 @@
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup-container {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 380px;
+  width: 90%;
+  border: 3px solid #5a4ff3;
+  animation: scaleIn 0.25s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.popup-container h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #222;
+  font-weight: 600;
+}
+
+.popup-image {
+  width: 130px;
+  margin: 10px 0 20px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.cancel-btn,
+.logout-btn {
+  padding: 10px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background-color: #e4e6eb;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background-color: #d0d3d8;
+}
+
+.logout-btn {
+  background-color: #5a4ff3;
+  color: white;
+}
+
+.logout-btn:hover {
+  background-color: #4a3fd9;
+}

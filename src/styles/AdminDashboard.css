@@ -1,0 +1,133 @@
+.admin-dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+/* Admin Sidebar Menu */
+.admin-sidebar-menu {
+  width: 280px;
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.admin-menu-title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 2rem 2rem;
+  letter-spacing: 0.5px;
+}
+
+.admin-menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.admin-menu-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: white;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.admin-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.admin-menu-item:hover::before {
+  transform: scaleY(1);
+}
+
+.admin-menu-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-weight: 600;
+}
+
+.admin-menu-item.active::before {
+  transform: scaleY(1);
+}
+
+.admin-menu-icon {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  min-width: 24px;
+}
+
+.admin-menu-label {
+  flex: 1;
+}
+
+/* Admin Content Area */
+.admin-content {
+  flex: 1;
+  margin-left: 280px;
+  padding: 2rem;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-sidebar-menu {
+    width: 200px;
+  }
+
+  .admin-content {
+    margin-left: 200px;
+    padding: 1rem;
+  }
+
+  .admin-menu-title {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+  }
+
+  .admin-menu-item {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .admin-menu-icon {
+    font-size: 1rem;
+    margin-right: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-sidebar-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .admin-content {
+    margin-left: 0;
+  }
+}

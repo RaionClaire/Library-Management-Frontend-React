@@ -1,0 +1,120 @@
+/* Sidebar container */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: #5a4ff3; /* ungu */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Title */
+.sidebar-title {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Menu list */
+.sidebar-menu,
+.submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Menu item */
+.sidebar-menu li,
+.submenu li {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Hover effect */
+.sidebar-menu li:hover,
+.submenu li:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Icon style */
+.icon {
+  margin-right: 10px;
+  font-size: 16px;
+  color: white;
+  transition: color 0.3s;
+}
+
+/* Text style */
+.sidebar-menu li span,
+.submenu li span {
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  transition: color 0.3s;
+}
+
+/* Dropdown layout */
+.dropdown {
+  justify-content: space-between;
+}
+
+/* Arrow icon */
+.arrow-icon {
+  font-size: 12px;
+  margin-left: auto;
+  transition: transform 0.3s;
+}
+
+/* Submenu animation */
+.submenu {
+  padding-left: 40px;
+  margin: 5px 0;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Aktif: warna oranye */
+.sidebar-menu li.active,
+.submenu li.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu li.active .icon,
+.submenu li.active .icon {
+  color: orange;
+}
+
+.sidebar-menu li.active span,
+.submenu li.active span {
+  color: orange;
+}
+
+/* Link reset */
+.sidebar-menu li a,
+.submenu li a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}

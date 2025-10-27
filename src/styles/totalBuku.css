@@ -1,0 +1,57 @@
+.container-totalbuku {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* dari center → flex-start supaya naik */
+  padding: 60px 20px 40px; /* tambah padding-top agar posisi tetap nyaman */
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+.judul {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 35px;
+  margin-top: 40px; /* beri jarak dari atas supaya tidak terlalu nempel */
+}
+
+.grid-totalbuku {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+  max-width: 700px;
+  width: 100%;
+  justify-items: center;
+}
+
+.card {
+  width: 180px;
+  height: 110px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+}

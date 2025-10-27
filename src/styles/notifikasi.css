@@ -1,0 +1,100 @@
+/* ===== Halaman utama ===== */
+.notifikasi-container {
+  min-height: 100vh;
+  background-color: #f6f7fb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== Judul ===== */
+.notifikasi-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* ===== Box notifikasi ===== */
+.notifikasi-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+/* ===== Ikon ===== */
+.icon {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ===== Teks ===== */
+.text h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.text p {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* ===== Varian Warna ===== */
+
+/* ✅ Berhasil */
+.success {
+  background-color: #e9fbf0;
+  border-color: #c1f1d2;
+}
+
+.success .icon {
+  background-color: #3ac57d;
+  color: #fff;
+}
+
+/* ⚠ Pengingat */
+.reminder {
+  background-color: #fff8e5;
+  border-color: #ffe8b2;
+}
+
+.reminder .icon {
+  background-color: #f5b400;
+  color: #fff;
+}
+
+/* ❌ Peringatan */
+.warning {
+  background-color: #ffeaea;
+  border-color: #ffc9c9;
+}
+
+.warning .icon {
+  background-color: #e14b4b;
+  color: #fff;
+}
+
+/* Hover efek */
+.notifikasi-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
