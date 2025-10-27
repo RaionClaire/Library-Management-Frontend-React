@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/BooksTable.css';
 import apiClient from '../utils/api';
+import { getBookPlaceholder, handleImageError } from '../utils/imagePlaceholder';
 import { Search, X, Book, Edit, Trash2, Plus, Info } from 'lucide-react';
 
 const BooksTable = () => {
@@ -102,18 +103,19 @@ const BooksTable = () => {
       if (bookData.id) {
         // Update existing book - use POST with _method for Laravel
         formData.append('_method', 'PUT');
-        const response = await apiClient.post(`/admin/books/${bookData.id}`, formData, {
+        await apiClient.post(`/admin/books/${bookData.id}`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
-        setBooks(books.map(b => b.id === bookData.id ? (response.data.book || response.data) : b));
       } else {
         // Create new book
-        const response = await apiClient.post('/admin/books', formData, {
+        await apiClient.post('/admin/books', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
-        setBooks([...books, response.data.book || response.data]);
       }
+      
       setIsModalOpen(false);
+      // Refresh data from server to get updated information
+      await fetchBooks();
     } catch (error) {
       console.error('Failed to save book:', error);
       let errorMessage = error.message;
@@ -191,10 +193,10 @@ const BooksTable = () => {
                 <td>{book.id}</td>
                 <td>
                   <img 
-                    src={book.cover_url || 'https://via.placeholder.com/40x60?text=Book'} 
+                    src={book.cover_url || getBookPlaceholder(40, 60)} 
                     alt={book.title}
                     className="book-cover-thumbnail"
-                    onError={(e) => e.target.src = 'https://via.placeholder.com/40x60?text=Book'}
+                    onError={(e) => handleImageError(e, 40, 60)}
                   />
                 </td>
                 <td className="book-title-cell">
@@ -256,10 +258,10 @@ const BookDetailModal = ({ book, onClose, onEdit }) => {
         <div className="detail-content">
           <div className="book-detail-header">
             <img 
-              src={book.cover_url || 'https://via.placeholder.com/150x225?text=Book'} 
+              src={book.cover_url || getBookPlaceholder(150, 225)} 
               alt={book.title}
               className="book-cover-large"
-              onError={(e) => e.target.src = 'https://via.placeholder.com/150x225?text=Book'}
+              onError={(e) => handleImageError(e, 150, 225)}
             />
             <div className="book-detail-info">
               <h3>{book.title}</h3>

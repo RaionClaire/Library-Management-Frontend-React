@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../styles/authorDetail.css";
 import { ArrowLeft, Book } from "lucide-react";
 import apiClient from "../utils/api.js";
+import { getBookPlaceholder, handleImageError } from "../utils/imagePlaceholder.js";
 
 const AuthorDetail = () => {
   const { id } = useParams();
@@ -66,6 +67,7 @@ const AuthorDetail = () => {
 
   return (
     <div className="author-detail-container">
+      
       <button type="button" className="back-btn" onClick={() => navigate(-1)}>
         <ArrowLeft /> Back
       </button>
@@ -102,12 +104,10 @@ const AuthorDetail = () => {
               <div key={book.id} className="book-card">
                 <div className="book-cover-wrapper" onClick={() => handleBookClick(book.id)}>
                   <img 
-                    src={book.cover_url || book.cover || "https://via.placeholder.com/150x200?text=No+Cover"} 
+                    src={book.cover_url || book.cover || getBookPlaceholder(150, 200, 'No Cover')} 
                     alt={book.title} 
                     className="book-cover"
-                    onError={(e) => {
-                      e.target.src = "https://via.placeholder.com/150x200?text=No+Cover";
-                    }}
+                    onError={(e) => handleImageError(e, 150, 200, 'No Cover')}
                   />
                   <div className="book-overlay">
                     <span>View Details</span>

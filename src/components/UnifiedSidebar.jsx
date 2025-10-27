@@ -30,7 +30,6 @@ const UnifiedSidebar = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const role = user?.role?.name || user?.role || "member";
 
-  // All menu items with their allowed roles
   const allMenuItems = [
     // Member-only items
     {

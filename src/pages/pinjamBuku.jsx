@@ -2,15 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "../styles/pinjamBuku.css";
 import apiClient from "../utils/api.js";
+import { getBookPlaceholder, handleImageError } from "../utils/imagePlaceholder.js";
 import { Book, Calendar, Info, CheckCircle } from "lucide-react";
-
-const mockBook = {
-  id: 1,
-  title: 'Hujan',
-  author: 'Tere Liye',
-  cover: 'https://via.placeholder.com/200x300?text=Hujan',
-  stock: 5,
-};
 
 export default function PinjamBuku() {
   const [book, setBook] = useState(null);
@@ -53,7 +46,7 @@ export default function PinjamBuku() {
     setLoanDate(date);
     if (date) {
       const newDueDate = new Date(date);
-      newDueDate.setDate(newDueDate.getDate() + 14); // 2 weeks loan period
+      newDueDate.setDate(newDueDate.getDate() + 7); 
       setDueDate(newDueDate.toISOString().split('T')[0]);
     } else {
       setDueDate("");
@@ -105,10 +98,10 @@ export default function PinjamBuku() {
         {/* Book Info Card */}
         <div className="book-info-card">
           <img 
-            src={book.cover_url || book.cover || 'https://via.placeholder.com/200x300?text=No+Cover'} 
+            src={book.cover_url || book.cover || getBookPlaceholder(200, 300, 'No Cover')} 
             alt={book.title} 
             className="book-cover"
-            onError={(e) => e.target.src = 'https://via.placeholder.com/200x300?text=No+Cover'}
+            onError={(e) => handleImageError(e, 200, 300, 'No Cover')}
           />
           <div className="book-details">
             <h2>{book.title}</h2>
@@ -150,7 +143,7 @@ export default function PinjamBuku() {
 
           <div className="form-row">
             <div className="form-group">
-              <label>Loan Date <span className="required">*</span></label>
+              <label>Tanggal Pengajuan <span className="required">*</span></label>
               <input 
                 type="date" 
                 value={loanDate} 
@@ -161,7 +154,7 @@ export default function PinjamBuku() {
             </div>
 
             <div className="form-group">
-              <label>Due Date (14 days)</label>
+              <label>Deadline Pengembalian (7 Hari)</label>
               <input 
                 type="date" 
                 value={dueDate} 
@@ -176,10 +169,9 @@ export default function PinjamBuku() {
             <div>
               <h3>Loan Policy</h3>
               <ul>
-                <li><CheckCircle /> Loan period: <strong>14 days</strong></li>
-                <li><CheckCircle /> Late return fine: <strong>Rp 1,000 per day</strong></li>
-                <li><CheckCircle /> Maximum extensions: <strong>1 time (7 days)</strong></li>
-                <li><CheckCircle /> Please return the book on time to avoid fines</li>
+                <li><CheckCircle /> Lama pinjam: <strong>7 hari</strong></li>
+                <li><CheckCircle /> Denda keterlambatan: <strong>Rp2.000 per hari</strong></li>
+                <li><CheckCircle /> Harap kembalikan buku tepat waktu untuk menghindari denda</li>
               </ul>
             </div>
           </div>

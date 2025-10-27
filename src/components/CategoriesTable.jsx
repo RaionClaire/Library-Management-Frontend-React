@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/CategoriesTable.css';
 import apiClient from '../utils/api';
+import { getBookPlaceholder, handleImageError } from '../utils/imagePlaceholder';
 import { Search, X, Tags, Edit, Trash2, Plus, Info, Book } from 'lucide-react';
 
 const CategoriesTable = () => {
@@ -77,13 +78,13 @@ const CategoriesTable = () => {
   const handleSave = async (category) => {
     try {
       if (category.id) {
-        const response = await apiClient.put(`/admin/categories/${category.id}`, category);
-        setCategories(categories.map(c => c.id === category.id ? (response.data.category || response.data) : c));
+        await apiClient.put(`/admin/categories/${category.id}`, category);
       } else {
-        const response = await apiClient.post('/admin/categories', category);
-        setCategories([...categories, response.data.category || response.data]);
+        await apiClient.post('/admin/categories', category);
       }
       setIsModalOpen(false);
+      // Refresh data from server to get updated information
+      await fetchCategories();
     } catch (error) {
       console.error('Failed to save category:', error);
       alert('Failed to save category: ' + (error.response?.data?.message || error.message));
@@ -309,10 +310,10 @@ const CategoryDetailModal = ({ category, onClose, onEdit }) => {
                   books.map(book => (
                     <div key={book.id} className="book-item">
                       <img 
-                        src={book.cover_url || 'https://via.placeholder.com/60x90?text=Book'} 
+                        src={book.cover_url || getBookPlaceholder(60, 90)} 
                         alt={book.title}
                         className="book-thumbnail"
-                        onError={(e) => e.target.src = 'https://via.placeholder.com/60x90?text=Book'}
+                        onError={(e) => handleImageError(e, 60, 90)}
                       />
                       <div className="book-item-info">
                         <strong>{book.title}</strong>

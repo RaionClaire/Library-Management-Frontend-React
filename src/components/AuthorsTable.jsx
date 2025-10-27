@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/AuthorsTable.css';
 import apiClient from '../utils/api';
+import { getBookPlaceholder, handleImageError } from '../utils/imagePlaceholder';
 import { Search, X, Book, Edit, Trash2, Plus, Info } from 'lucide-react';
 
 const AuthorsTable = () => {
@@ -77,13 +78,13 @@ const AuthorsTable = () => {
   const handleSave = async (author) => {
     try {
       if (author.id) {
-        const response = await apiClient.put(`/admin/authors/${author.id}`, author);
-        setAuthors(authors.map(a => a.id === author.id ? (response.data.author || response.data) : a));
+        await apiClient.put(`/admin/authors/${author.id}`, author);
       } else {
-        const response = await apiClient.post('/admin/authors', author);
-        setAuthors([...authors, response.data.author || response.data]);
+        await apiClient.post('/admin/authors', author);
       }
       setIsModalOpen(false);
+      // Refresh data from server to get updated information
+      await fetchAuthors();
     } catch (error) {
       console.error('Failed to save author:', error);
       alert('Failed to save author: ' + (error.response?.data?.message || error.message));
@@ -309,10 +310,10 @@ const AuthorDetailModal = ({ author, onClose, onEdit }) => {
                   books.map(book => (
                     <div key={book.id} className="book-item">
                       <img 
-                        src={book.cover_url || 'https://via.placeholder.com/60x90?text=Book'} 
+                        src={book.cover_url || getBookPlaceholder(60, 90)} 
                         alt={book.title}
                         className="book-thumbnail"
-                        onError={(e) => e.target.src = 'https://via.placeholder.com/60x90?text=Book'}
+                        onError={(e) => handleImageError(e, 60, 90)}
                       />
                       <div className="book-item-info">
                         <strong>{book.title}</strong>

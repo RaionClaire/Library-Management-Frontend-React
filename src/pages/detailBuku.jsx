@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "../styles/detailBuku.css";
 import apiClient from "../utils/api.js";
+import { getBookPlaceholder, handleImageError } from "../utils/imagePlaceholder.js";
 
 const DetailBuku = () => {
   const [book, setBook] = useState(null);
@@ -65,12 +66,10 @@ const DetailBuku = () => {
 
       <div className="detailbuku-content">
         <img 
-          src={book.cover_url || 'https://via.placeholder.com/200x300?text=No+Cover'} 
+          src={book.cover_url || getBookPlaceholder(200, 300, 'No Cover')} 
           alt={book.title} 
           className="cover-buku"
-          onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/200x300?text=No+Cover';
-          }}
+          onError={(e) => handleImageError(e, 200, 300, 'No Cover')}
         />
         <h3 className="judul-buku">{book.title}</h3>
         <p className="penulis">{book.author?.name || book.author_name || 'Unknown Author'}</p>

@@ -6,15 +6,15 @@ import apiClient from "../utils/api.js";
 
 // Category icon/color mapping
 const categoryStyles = {
-  "Fantasy": { icon: "🧙‍♂️", color: "#667eea" },
-  "Romance": { icon: "💖", color: "#ec4899" },
-  "Classic": { icon: "📚", color: "#8b5cf6" },
-  "Science Fiction": { icon: "🚀", color: "#3b82f6" },
-  "Mystery": { icon: "🔍", color: "#f59e0b" },
-  "Biography": { icon: "👤", color: "#10b981" },
-  "History": { icon: "🏛️", color: "#ef4444" },
+  "Fantasi": { icon: "🧙‍♂️", color: "#667eea" },
+  "Romansa": { icon: "💖", color: "#ec4899" },
+  "Klasik": { icon: "📚", color: "#8b5cf6" },
+  "Fiksi Sains": { icon: "🚀", color: "#3b82f6" },
+  "Misteri": { icon: "🔍", color: "#f59e0b" },
+  "Biografi": { icon: "👤", color: "#10b981" },
+  "Sejarah": { icon: "🏛️", color: "#ef4444" },
   "Self-Help": { icon: "💡", color: "#f97316" },
-  "default": { icon: "�", color: "#6b7280" }
+  "default": { icon: "📖", color: "#6b7280" }
 };
 
 const Categories = () => {

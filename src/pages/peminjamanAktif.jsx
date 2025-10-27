@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/peminjamanAktif.css";
 import apiClient from "../utils/api.js";
+import { getBookPlaceholder, handleImageError } from "../utils/imagePlaceholder.js";
 import { Book, Calendar, Search, X, Clock, CheckCircle, TriangleAlert } from "lucide-react";
 
 export default function PeminjamanAktif() {
@@ -113,10 +114,10 @@ export default function PeminjamanAktif() {
           return (
             <div className="buku-card" key={loan.id}>
               <img 
-                src={loan.book?.cover_url || loan.cover || 'https://via.placeholder.com/150x200?text=Book+Cover'} 
+                src={loan.book?.cover_url || loan.cover || getBookPlaceholder(150, 200, 'Book Cover')} 
                 alt={loan.book?.title || loan.bookTitle} 
                 className="buku-cover"
-                onError={(e) => e.target.src = 'https://via.placeholder.com/150x200?text=Book+Cover'}
+                onError={(e) => handleImageError(e, 150, 200, 'Book Cover')}
               />
               <div className="buku-info">
                 <h3 className="buku-judul">{loan.book?.title || loan.bookTitle}</h3>

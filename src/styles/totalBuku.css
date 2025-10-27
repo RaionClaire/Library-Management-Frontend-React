@@ -6,6 +6,8 @@
   padding: 60px 20px 40px; /* tambah padding-top agar posisi tetap nyaman */
   background-color: #f5f7fa;
   min-height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   font-family: "Poppins", sans-serif;
 }
 

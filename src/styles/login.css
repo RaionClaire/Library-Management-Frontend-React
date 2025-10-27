@@ -5,28 +5,25 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* Avoid globally hiding overflow; let pages scroll normally */
 body,
 html {
   width: 100%;
   height: 100%;
-  margin: 0; /* tambahkan ini */
-  padding: 0; /* pastikan juga ini ada */
-  overflow: hidden;
-  background-color: #f3f5fc; /* biarkan transparan */
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  background-color: #f3f5fc;
 }
 
 .login-container {
   display: flex;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   background-color: #5a4ff3;
   margin: 0;
   padding: 0;
-  position: fixed; /* tambahkan ini supaya benar-benar menempel layar */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
 }
 
 /* BAGIAN KIRI */

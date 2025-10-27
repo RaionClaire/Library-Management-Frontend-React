@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import apiClient from "../utils/api.js";
+import { getBookPlaceholder, handleImageError } from "../utils/imagePlaceholder.js";
 
 export default function Home() {
   const [books, setBooks] = useState([]);
@@ -126,11 +127,9 @@ export default function Home() {
             <div className="book-card" key={book.id}>
               <div className="book-cover" onClick={() => handleBookClick(book.id)}>
                 <img 
-                  src={book.cover_url || 'https://via.placeholder.com/150x200?text=No+Cover'} 
+                  src={book.cover_url || getBookPlaceholder(150, 200, 'No Cover')} 
                   alt={book.title}
-                  onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/150x200?text=No+Cover';
-                  }}
+                  onError={(e) => handleImageError(e, 150, 200, 'No Cover')}
                 />
               </div>
               <div className="book-card-info">
