@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "../styles/pinjamBuku.css";
 import apiClient from "../utils/api.js";
 import { getBookPlaceholder, handleImageError } from "../utils/imagePlaceholder.js";
+import { showSuccess, showError } from "../utils/sweetAlert";
 import { Book, Calendar, Info, CheckCircle } from "lucide-react";
 
 export default function PinjamBuku() {
@@ -66,7 +67,7 @@ export default function PinjamBuku() {
         due_at: dueDate,
       });
       
-      alert(`Book "${book.title}" loaned successfully!\nDue date: ${dueDate}`);
+      showSuccess("Loan Successful!", `Book "${book.title}" loaned successfully!\nDue date: ${dueDate}`);
       navigate("/peminjaman");
     } catch (error) {
       console.error("Failed to create loan:", error);

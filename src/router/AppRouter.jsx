@@ -28,7 +28,6 @@ import LoansTable from "../components/LoansTable.jsx";
 import FinesTable from "../components/FinesTable.jsx";
 import UsersTable from "../components/UsersTable.jsx";
 import Reports from "../components/Reports.jsx";
-import AdminDashboard from "../pages/AdminDashboard.jsx";
 
 function AppRoutes() {
   const location = useLocation();
@@ -81,7 +80,6 @@ function AppRoutes() {
 
             {/* Protected routes - ADMIN ONLY */}
             <Route element={<RequireRole roles={["admin"]} />}> 
-              <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/books" element={<BooksTable />} />
               <Route path="/admin/authors" element={<AuthorsTable />} />
               <Route path="/admin/categories" element={<CategoriesTable />} />

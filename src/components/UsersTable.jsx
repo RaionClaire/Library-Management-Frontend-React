@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/UsersTable.css';
 import apiClient from '../utils/api';
+import { showSuccess, showError, showDeleteConfirm } from '../utils/sweetAlert';
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
@@ -34,14 +35,16 @@ const UsersTable = () => {
   };
 
   const handleDelete = async (userId) => {
-    if (!window.confirm('Are you sure you want to delete this user?')) return;
+    const result = await showDeleteConfirm('this user');
+    if (!result.isConfirmed) return;
     
     try {
       await apiClient.delete(`/admin/users/${userId}`);
       setUsers(users.filter(user => user.id !== userId));
+      showSuccess('Deleted!', 'User has been deleted successfully');
     } catch (error) {
       console.error('Failed to delete user:', error);
-      alert('Failed to delete user: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to delete user: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -51,9 +54,10 @@ const UsersTable = () => {
       const updatedUser = response.data.user || response.data.data || response.data;
       setUsers(users.map(u => u.id === userId ? updatedUser : u));
       setIsModalOpen(false);
+      showSuccess('Success!', 'User role updated successfully');
     } catch (error) {
       console.error('Failed to update user role:', error);
-      alert('Failed to update user role: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to update user role: ' + (error.response?.data?.message || error.message));
     }
   };
 

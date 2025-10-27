@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/CategoriesTable.css';
 import apiClient from '../utils/api';
 import { getBookPlaceholder, handleImageError } from '../utils/imagePlaceholder';
+import { showSuccess, showError, showDeleteConfirm } from '../utils/sweetAlert';
 import { Search, X, Tags, Edit, Trash2, Plus, Info, Book } from 'lucide-react';
 
 const CategoriesTable = () => {
@@ -64,14 +65,16 @@ const CategoriesTable = () => {
   };
 
   const handleDelete = async (categoryId) => {
-    if (!window.confirm('Are you sure you want to delete this category?')) return;
+    const result = await showDeleteConfirm('this category');
+    if (!result.isConfirmed) return;
     
     try {
       await apiClient.delete(`/admin/categories/${categoryId}`);
       setCategories(categories.filter(category => category.id !== categoryId));
+      showSuccess('Deleted!', 'Category has been deleted successfully');
     } catch (error) {
       console.error('Failed to delete category:', error);
-      alert('Failed to delete category: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to delete category: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -83,11 +86,12 @@ const CategoriesTable = () => {
         await apiClient.post('/admin/categories', category);
       }
       setIsModalOpen(false);
+      showSuccess('Success!', 'Category saved successfully');
       // Refresh data from server to get updated information
       await fetchCategories();
     } catch (error) {
       console.error('Failed to save category:', error);
-      alert('Failed to save category: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to save category: ' + (error.response?.data?.message || error.message));
     }
   };
 

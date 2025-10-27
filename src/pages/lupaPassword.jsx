@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/lupaPassword.css";
 import { useNavigate } from "react-router-dom";
+import { showSuccess } from "../utils/sweetAlert";
 
 const LupaPassword = () => {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ const LupaPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // In a real app, you would make an API call to send a password reset email
-    alert(`Password reset link sent to ${email}`);
+    showSuccess("Reset Link Sent!", `Password reset link sent to ${email}`);
     navigate("/login");
   };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/FinesTable.css';
 import apiClient from '../utils/api.js';
+import { showSuccess, showError, showDeleteConfirm } from '../utils/sweetAlert';
 import { Search, X, DollarSign, Edit, Trash2, Plus, Info, CheckCircle, TriangleAlert } from 'lucide-react';
 
 const FinesTable = () => {
@@ -73,15 +74,17 @@ const FinesTable = () => {
   };
 
   const handleDelete = async (fineId) => {
-    if (!window.confirm('Are you sure you want to delete this fine?')) return;
+    const result = await showDeleteConfirm('this fine');
+    if (!result.isConfirmed) return;
     
     try {
       await apiClient.delete(`/admin/fines/${fineId}`);
       // refetch to update list and summary (API enforces only delete if paid)
       await fetchFines();
+      showSuccess('Deleted!', 'Fine has been deleted successfully');
     } catch (error) {
       console.error('Failed to delete fine:', error);
-      alert('Failed to delete fine: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to delete fine: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -90,9 +93,10 @@ const FinesTable = () => {
       const response = await apiClient.post(`/admin/fines/${fineId}/pay`);
       // After payment, refetch to get updated status and updated summary
       await fetchFines();
+      showSuccess('Success!', 'Fine marked as paid successfully');
     } catch (error) {
       console.error('Failed to mark fine as paid:', error);
-      alert('Failed to mark fine as paid: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to mark fine as paid: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -108,9 +112,10 @@ const FinesTable = () => {
         await fetchFines();
       }
       setIsModalOpen(false);
+      showSuccess('Success!', 'Fine saved successfully');
     } catch (error) {
       console.error('Failed to save fine:', error);
-      alert('Failed to save fine: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to save fine: ' + (error.response?.data?.message || error.message));
     }
   };
 

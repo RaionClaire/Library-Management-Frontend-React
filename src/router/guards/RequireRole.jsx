@@ -8,7 +8,7 @@ export default function RequireRole({ roles = [] }) {
   const role = user?.role?.name || user?.role;
 
   if (!role || (roles.length && !roles.includes(role))) {
-    const redirectPath = role === "admin" ? "/admin/books" : "/home";
+    const redirectPath = role === "admin" ? "/admin" : "/home";
     return <Navigate to={redirectPath} replace />;
   }
   return <Outlet />;

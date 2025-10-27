@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/BooksTable.css';
 import apiClient from '../utils/api';
 import { getBookPlaceholder, handleImageError } from '../utils/imagePlaceholder';
+import { showSuccess, showError, showDeleteConfirm } from '../utils/sweetAlert';
 import { Search, X, Book, Edit, Trash2, Plus, Info } from 'lucide-react';
 
 const BooksTable = () => {
@@ -70,14 +71,16 @@ const BooksTable = () => {
   };
 
   const handleDelete = async (bookId) => {
-    if (!window.confirm('Are you sure you want to delete this book?')) return;
+    const result = await showDeleteConfirm('this book');
+    if (!result.isConfirmed) return;
     
     try {
       await apiClient.delete(`/admin/books/${bookId}`);
       setBooks(books.filter(book => book.id !== bookId));
+      showSuccess('Deleted!', 'Book has been deleted successfully');
     } catch (error) {
       console.error('Failed to delete book:', error);
-      alert('Failed to delete book: ' + (error.response?.data?.message || error.message));
+      showError('Delete Failed', error.response?.data?.message || error.message);
     }
   };
 
@@ -116,6 +119,7 @@ const BooksTable = () => {
       setIsModalOpen(false);
       // Refresh data from server to get updated information
       await fetchBooks();
+      showSuccess('Success!', bookData.id ? 'Book updated successfully' : 'Book created successfully');
     } catch (error) {
       console.error('Failed to save book:', error);
       let errorMessage = error.message;
@@ -126,7 +130,7 @@ const BooksTable = () => {
         errorMessage = Object.values(error.response.data.errors).flat().join(', ');
       }
       
-      alert('Failed to save book: ' + errorMessage);
+      showError('Save Failed', errorMessage);
     }
   };
 
@@ -373,28 +377,28 @@ const BookModal = ({ book, onClose, onSave }) => {
     setCoverFile(null); // Clear file if URL is entered
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validation
     if (!formData.title || formData.title.length > 255) {
-      alert('Title is required and must be less than 255 characters');
+      showError('Validation Error', 'Title is required and must be less than 255 characters');
       return;
     }
     if (!formData.isbn || formData.isbn.length > 13) {
-      alert('ISBN is required and must be less than 13 characters');
+      showError('Validation Error', 'ISBN is required and must be less than 13 characters');
       return;
     }
     if (!formData.publisher || formData.publisher.length > 255) {
-      alert('Publisher is required and must be less than 255 characters');
+      showError('Validation Error', 'Publisher is required and must be less than 255 characters');
       return;
     }
     if (!formData.year || formData.year < 1000 || formData.year > currentYear) {
-      alert(`Year is required and must be between 1000 and ${currentYear}`);
+      showError('Validation Error', `Year is required and must be between 1000 and ${currentYear}`);
       return;
     }
     if (formData.stock < 0) {
-      alert('Stock must be 0 or greater');
+      showError('Validation Error', 'Stock must be 0 or greater');
       return;
     }
 

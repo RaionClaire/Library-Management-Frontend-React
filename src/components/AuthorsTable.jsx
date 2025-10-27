@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/AuthorsTable.css';
 import apiClient from '../utils/api';
 import { getBookPlaceholder, handleImageError } from '../utils/imagePlaceholder';
+import { showSuccess, showError, showDeleteConfirm } from '../utils/sweetAlert';
 import { Search, X, Book, Edit, Trash2, Plus, Info } from 'lucide-react';
 
 const AuthorsTable = () => {
@@ -64,14 +65,16 @@ const AuthorsTable = () => {
   };
 
   const handleDelete = async (authorId) => {
-    if (!window.confirm('Are you sure you want to delete this author?')) return;
+    const result = await showDeleteConfirm('this author');
+    if (!result.isConfirmed) return;
     
     try {
       await apiClient.delete(`/admin/authors/${authorId}`);
       setAuthors(authors.filter(author => author.id !== authorId));
+      showSuccess('Deleted!', 'Author has been deleted successfully');
     } catch (error) {
       console.error('Failed to delete author:', error);
-      alert('Failed to delete author: ' + (error.response?.data?.message || error.message));
+      showError('Delete Failed', error.response?.data?.message || error.message);
     }
   };
 
@@ -85,9 +88,10 @@ const AuthorsTable = () => {
       setIsModalOpen(false);
       // Refresh data from server to get updated information
       await fetchAuthors();
+      showSuccess('Success!', author.id ? 'Author updated successfully' : 'Author created successfully');
     } catch (error) {
       console.error('Failed to save author:', error);
-      alert('Failed to save author: ' + (error.response?.data?.message || error.message));
+      showError('Save Failed', error.response?.data?.message || error.message);
     }
   };
 

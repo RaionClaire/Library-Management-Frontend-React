@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../styles/memberFines.css";
 import { Banknote, CheckCircle, TriangleAlert } from "lucide-react";
 import apiClient from "../utils/api.js";
+import { showSuccess, showError } from "../utils/sweetAlert";
 
 const mockFines = [
   {
@@ -98,13 +99,13 @@ const MemberFines = () => {
       // refresh data from server
       await fetchFines();
       await fetchUnpaidSummary();
-      alert("Payment successful!");
+      showSuccess("Payment Successful!", "Your fine payment has been processed");
     } catch (error) {
       console.error("Failed to pay fine:", error);
       // fallback: optimistic update if API fails
       setFines((prev) => prev.map((fine) => (fine.id === fineId ? { ...fine, status: "paid" } : fine)));
       await fetchUnpaidSummary();
-      alert("Payment processed locally (API failed). Please refresh to confirm.");
+      showError("Payment Issue", "Payment processed locally (API failed). Please refresh to confirm.");
     } finally {
       setPayingFineId(null);
     }

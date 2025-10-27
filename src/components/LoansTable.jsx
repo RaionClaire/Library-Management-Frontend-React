@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/LoansTable.css';
 import apiClient from '../utils/api';
+import { showSuccess, showError, showDeleteConfirm } from '../utils/sweetAlert';
 import { Search, X, Book, Edit, Trash2, Plus, Info, Check, Ban, Clock, CheckCircle, XCircle } from 'lucide-react';
 
 const LoansTable = () => {
@@ -77,14 +78,16 @@ const LoansTable = () => {
   };
 
   const handleDelete = async (loanId) => {
-    if (!window.confirm('Are you sure you want to delete this loan?')) return;
+    const result = await showDeleteConfirm('this loan');
+    if (!result.isConfirmed) return;
     
     try {
       await apiClient.delete(`/admin/loans/${loanId}`);
       setLoans(loans.filter(loan => loan.id !== loanId));
+      showSuccess('Deleted!', 'Loan has been deleted successfully');
     } catch (error) {
       console.error('Failed to delete loan:', error);
-      alert('Failed to delete loan: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to delete loan: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -93,9 +96,10 @@ const LoansTable = () => {
       const response = await apiClient.post(`/admin/loans/${loanId}/return`);
       const updatedLoan = response.data.loan || response.data.data || response.data;
       setLoans(loans.map(loan => loan.id === loanId ? updatedLoan : loan));
+      showSuccess('Success!', 'Book returned successfully');
     } catch (error) {
       console.error('Failed to return book:', error);
-      alert('Failed to return book: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to return book: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -107,15 +111,17 @@ const LoansTable = () => {
       const response = await apiClient.post(`/admin/loans/${loanId}/extend`, { days: parseInt(days) });
       const updatedLoan = response.data.loan || response.data.data || response.data;
       setLoans(loans.map(loan => loan.id === loanId ? updatedLoan : loan));
+      showSuccess('Success!', `Loan extended by ${days} days`);
       fetchLoans(); // Refresh the list
     } catch (error) {
       console.error('Failed to extend loan:', error);
-      alert('Failed to extend loan: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to extend loan: ' + (error.response?.data?.message || error.message));
     }
   };
 
   const handleApprove = async (loanId) => {
-    if (!window.confirm('Are you sure you want to approve this loan request?')) return;
+    const result = await showDeleteConfirm('approve this loan request');
+    if (!result.isConfirmed) return;
     
     try {
       const response = await apiClient.post(`/admin/loans/${loanId}/approve`);
@@ -125,12 +131,12 @@ const LoansTable = () => {
       setPendingLoans(pendingLoans.filter(loan => loan.id !== loanId));
       setLoans([approvedLoan, ...loans]);
       
-      alert('Loan approved successfully!');
+      showSuccess('Approved!', 'Loan approved successfully');
       fetchLoans();
       fetchPendingLoans();
     } catch (error) {
       console.error('Failed to approve loan:', error);
-      alert('Failed to approve loan: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to approve loan: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -146,11 +152,11 @@ const LoansTable = () => {
       // Remove from pending loans
       setPendingLoans(pendingLoans.filter(loan => loan.id !== loanId));
       
-      alert('Loan rejected successfully!');
+      showSuccess('Rejected!', 'Loan rejected successfully');
       fetchPendingLoans();
     } catch (error) {
       console.error('Failed to reject loan:', error);
-      alert('Failed to reject loan: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to reject loan: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -166,9 +172,10 @@ const LoansTable = () => {
         setLoans([...loans, newLoan]);
       }
       setIsModalOpen(false);
+      showSuccess('Success!', 'Loan saved successfully');
     } catch (error) {
       console.error('Failed to save loan:', error);
-      alert('Failed to save loan: ' + (error.response?.data?.message || error.message));
+      showError('Error', 'Failed to save loan: ' + (error.response?.data?.message || error.message));
     }
   };
 
