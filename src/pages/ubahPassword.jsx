@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/ubahPassword.css";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Eye, EyeOff } from "lucide-react";
 import apiClient from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
@@ -80,7 +80,7 @@ const UbahPassword = () => {
                 minLength={8}
               />
               <span onClick={() => setShowNewPassword(!showNewPassword)}>
-                {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                {showNewPassword ? <EyeOff /> : <Eye />}
               </span>
             </div>
           </div>
@@ -97,7 +97,7 @@ const UbahPassword = () => {
                 minLength={8}
               />
               <span onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                {showConfirmPassword ? <EyeOff /> : <Eye />}
               </span>
             </div>
           </div>

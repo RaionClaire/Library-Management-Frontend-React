@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/peminjamanAktif.css";
 import apiClient from "../utils/api";
-import { FaBook, FaCalendar, FaSearch, FaTimes, FaClock, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import { Book, Calendar, Search, X, Clock, CheckCircle, TriangleAlert } from "lucide-react";
 
 export default function PeminjamanAktif() {
   const [loans, setLoans] = useState([]);
@@ -51,11 +51,11 @@ export default function PeminjamanAktif() {
     const isOverdue = dueDate < today && loan.status !== 'Returned';
     
     if (loan.status === 'Returned') {
-      return { label: 'Returned', class: 'returned', icon: <FaCheckCircle /> };
+      return { label: 'Returned', class: 'returned', icon: <CheckCircle /> };
     } else if (isOverdue) {
-      return { label: 'Overdue', class: 'overdue', icon: <FaExclamationTriangle /> };
+      return { label: 'Overdue', class: 'overdue', icon: <TriangleAlert /> };
     } else {
-      return { label: 'Active', class: 'active', icon: <FaClock /> };
+      return { label: 'Active', class: 'active', icon: <Clock /> };
     }
   };
 
@@ -67,11 +67,11 @@ export default function PeminjamanAktif() {
     <div className="peminjaman-container">
       <div className="page-header">
         <div>
-          <h2 className="judul-halaman"><FaBook /> Active Loans</h2>
+          <h2 className="judul-halaman"><Book /> Active Loans</h2>
           <p className="page-subtitle">Manage your borrowed books</p>
         </div>
         <div className="search-box">
-          <FaSearch className="search-icon" />
+          <Search className="search-icon" />
           <input
             type="text"
             placeholder="Search by book title..."
@@ -80,7 +80,7 @@ export default function PeminjamanAktif() {
             className="search-input"
           />
           {searchQuery && (
-            <FaTimes 
+            <X 
               className="clear-icon" 
               onClick={() => setSearchQuery('')}
             />
@@ -115,14 +115,14 @@ export default function PeminjamanAktif() {
                 
                 <div className="buku-dates">
                   <div className="date-item">
-                    <FaCalendar className="date-icon" />
+                    <Calendar className="date-icon" />
                     <div>
                       <span className="date-label">Loan Date:</span>
                       <span className="date-value">{new Date(loan.loaned_at).toLocaleDateString()}</span>
                     </div>
                   </div>
                   <div className="date-item">
-                    <FaCalendar className="date-icon" />
+                    <Calendar className="date-icon" />
                     <div>
                       <span className="date-label">Due Date:</span>
                       <span className="date-value">{new Date(loan.due_at).toLocaleDateString()}</span>
@@ -130,7 +130,7 @@ export default function PeminjamanAktif() {
                   </div>
                   {loan.returned_at && (
                     <div className="date-item">
-                      <FaCheckCircle className="date-icon" />
+                      <CheckCircle className="date-icon" />
                       <div>
                         <span className="date-label">Returned:</span>
                         <span className="date-value">{new Date(loan.returned_at).toLocaleDateString()}</span>

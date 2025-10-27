@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/AuthorsTable.css';
 import apiClient from '../utils/api';
-import { FaSearch, FaTimes, FaBook, FaEdit, FaTrash, FaPlus, FaInfoCircle } from 'react-icons/fa';
+import { Search, X, Book, Edit, Trash2, Plus, Info } from 'lucide-react';
 
 const AuthorsTable = () => {
   const [authors, setAuthors] = useState([]);
@@ -95,10 +95,10 @@ const AuthorsTable = () => {
   return (
     <div className="authors-table-container">
       <div className="authors-table-header">
-        <h2><FaBook /> Manage Authors</h2>
+        <h2><Book /> Manage Authors</h2>
         <div className="header-actions">
           <div className="search-box">
-            <FaSearch className="search-icon" />
+            <Search className="search-icon" />
             <input
               type="text"
               placeholder="Search authors by name or biography..."
@@ -107,14 +107,14 @@ const AuthorsTable = () => {
               className="search-input"
             />
             {searchQuery && (
-              <FaTimes 
+              <X 
                 className="clear-icon" 
                 onClick={() => setSearchQuery('')}
               />
             )}
           </div>
           <button className="btn-add" onClick={handleAdd}>
-            <FaPlus /> Add Author
+            <Plus /> Add Author
           </button>
         </div>
       </div>
@@ -141,7 +141,7 @@ const AuthorsTable = () => {
           {filteredAuthors.length === 0 ? (
             <tr>
               <td colSpan="5" className="no-data">
-                <FaInfoCircle /> {searchQuery ? 'No authors found matching your search' : 'No authors found'}
+                <Info /> {searchQuery ? 'No authors found matching your search' : 'No authors found'}
               </td>
             </tr>
           ) : (
@@ -159,10 +159,10 @@ const AuthorsTable = () => {
                 </td>
                 <td className="actions-cell">
                   <button className="btn-edit" onClick={(e) => { e.stopPropagation(); handleEdit(author); }}>
-                    <FaEdit /> Edit
+                    <Edit /> Edit
                   </button>
                   <button className="btn-delete" onClick={(e) => { e.stopPropagation(); handleDelete(author.id); }}>
-                    <FaTrash /> Delete
+                    <Trash2 /> Delete
                   </button>
                 </td>
               </tr>
@@ -213,7 +213,7 @@ const AuthorModal = ({ author, onClose, onSave }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>{author ? 'Edit Author' : 'Add New Author'}</h2>
-          <button className="close-btn" onClick={onClose}><FaTimes /></button>
+          <button className="close-btn" onClick={onClose}><X /></button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -271,8 +271,8 @@ const AuthorDetailModal = ({ author, onClose, onEdit }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content detail-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2><FaInfoCircle /> Author Details</h2>
-          <button className="close-btn" onClick={onClose}><FaTimes /></button>
+          <h2><Info /> Author Details</h2>
+          <button className="close-btn" onClick={onClose}><X /></button>
         </div>
         
         <div className="detail-content">
@@ -301,7 +301,7 @@ const AuthorDetailModal = ({ author, onClose, onEdit }) => {
 
           {books.length > 0 && (
             <div className="detail-section">
-              <h3><FaBook /> Books by this Author</h3>
+              <h3><Book /> Books by this Author</h3>
               <div className="books-list">
                 {loadingBooks ? (
                   <p>Loading books...</p>
@@ -331,7 +331,7 @@ const AuthorDetailModal = ({ author, onClose, onEdit }) => {
         <div className="modal-actions">
           <button type="button" className="btn-cancel" onClick={onClose}>Close</button>
           <button type="button" className="btn-edit" onClick={() => onEdit(author)}>
-            <FaEdit /> Edit Author
+            <Edit /> Edit Author
           </button>
         </div>
       </div>

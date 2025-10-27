@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/AdminDashboard.css";
-import { FaBook, FaUserEdit, FaTags, FaClipboardList, FaDollarSign, FaChartBar } from "react-icons/fa";
+import { Book, UserPen, Tags, ClipboardList, DollarSign, BarChart } from "lucide-react";
 
 import BooksTable from "../components/BooksTable.jsx";
 import AuthorsTable from "../components/AuthorsTable.jsx";
@@ -13,12 +13,12 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("books");
 
   const menuItems = [
-    { id: "books", label: "Manage Books", icon: <FaBook /> },
-    { id: "authors", label: "Manage Authors", icon: <FaUserEdit /> },
-    { id: "categories", label: "Manage Categories", icon: <FaTags /> },
-    { id: "loans", label: "Manage Loans", icon: <FaClipboardList /> },
-    { id: "fines", label: "Manage Fines", icon: <FaDollarSign /> },
-    { id: "reports", label: "Reports", icon: <FaChartBar /> },
+    { id: "books", label: "Manage Books", icon: <Book /> },
+    { id: "authors", label: "Manage Authors", icon: <UserPen /> },
+    { id: "categories", label: "Manage Categories", icon: <Tags /> },
+    { id: "loans", label: "Manage Loans", icon: <ClipboardList /> },
+    { id: "fines", label: "Manage Fines", icon: <DollarSign /> },
+    { id: "reports", label: "Reports", icon: <BarChart /> },
   ];
 
   const renderContent = () => {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/categories.css";
-import { FaTags, FaBook, FaSearch } from "react-icons/fa";
+import { Tags, Book, Search } from "lucide-react";
 import apiClient from "../utils/api.js";
 
 // Category icon/color mapping
@@ -78,7 +78,7 @@ const Categories = () => {
 
       {/* Search Bar */}
       <div className="search-bar">
-        <FaSearch className="search-icon" />
+        <Search className="search-icon" />
         <input
           type="text"
           placeholder="Search categories..."
@@ -93,7 +93,7 @@ const Categories = () => {
         <p className="loading">Loading categories...</p>
       ) : filteredCategories.length === 0 ? (
         <div className="no-results">
-          <FaTags className="no-results-icon" />
+          <Tags className="no-results-icon" />
           <p>No categories found</p>
         </div>
       ) : (
@@ -112,7 +112,7 @@ const Categories = () => {
                 <h3 className="category-name">{category.name}</h3>
                 <p className="category-description">{category.description || "Explore books in this category"}</p>
                 <div className="category-stats" style={{ color: category.color }}>
-                  <FaBook className="stats-icon" />
+                  <Book className="stats-icon" />
                   <span>{category.books_count || category.booksCount || 0} Books</span>
                 </div>
               </div>

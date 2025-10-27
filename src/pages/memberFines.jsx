@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "../styles/memberFines.css";
-import { FaMoneyBillWave, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import { Banknote, CheckCircle, TriangleAlert } from "lucide-react";
 // import apiClient from "../utils/api.js";
 
 const mockFines = [
@@ -120,7 +120,7 @@ const MemberFines = () => {
       {/* Summary Cards */}
       <div className="fines-summary">
         <div className="summary-card total">
-          <FaMoneyBillWave className="summary-icon" />
+          <Banknote className="summary-icon" />
           <div className="summary-content">
             <h3>Total Fines</h3>
             <p className="summary-number">{summary.total}</p>
@@ -128,7 +128,7 @@ const MemberFines = () => {
         </div>
 
         <div className="summary-card unpaid">
-          <FaExclamationTriangle className="summary-icon" />
+          <TriangleAlert className="summary-icon" />
           <div className="summary-content">
             <h3>Unpaid Fines</h3>
             <p className="summary-number">{summary.unpaid}</p>
@@ -136,7 +136,7 @@ const MemberFines = () => {
         </div>
 
         <div className="summary-card amount">
-          <FaMoneyBillWave className="summary-icon" />
+          <Banknote className="summary-icon" />
           <div className="summary-content">
             <h3>Total Amount Unpaid</h3>
             <p className="summary-amount">{formatCurrency(summary.totalAmount || 0)}</p>
@@ -150,7 +150,7 @@ const MemberFines = () => {
           <p className="loading">Loading fines...</p>
         ) : fines.length === 0 ? (
           <div className="no-fines">
-            <FaCheckCircle className="no-fines-icon" />
+            <CheckCircle className="no-fines-icon" />
             <p>You have no fines. Great job!</p>
           </div>
         ) : (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/FinesTable.css';
 import apiClient from '../utils/api';
-import { FaSearch, FaTimes, FaDollarSign, FaEdit, FaTrash, FaPlus, FaInfoCircle, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
+import { Search, X, DollarSign, Edit, Trash2, Plus, Info, CheckCircle, TriangleAlert } from 'lucide-react';
 
 const FinesTable = () => {
   const [fines, setFines] = useState([]);
@@ -114,10 +114,10 @@ const FinesTable = () => {
   return (
     <div className="fines-table-container">
       <div className="fines-table-header">
-        <h2><FaDollarSign /> Manage Fines</h2>
+        <h2><DollarSign /> Manage Fines</h2>
         <div className="header-actions">
           <div className="search-box">
-            <FaSearch className="search-icon" />
+            <Search className="search-icon" />
             <input
               type="text"
               placeholder="Search fines by member name, reason, or loan ID..."
@@ -126,14 +126,14 @@ const FinesTable = () => {
               className="search-input"
             />
             {searchQuery && (
-              <FaTimes 
+              <X 
                 className="clear-icon" 
                 onClick={() => setSearchQuery('')}
               />
             )}
           </div>
           <button className="btn-add" onClick={handleAdd}>
-            <FaPlus /> Add Fine
+            <Plus /> Add Fine
           </button>
         </div>
       </div>
@@ -162,7 +162,7 @@ const FinesTable = () => {
           {filteredFines.length === 0 ? (
             <tr>
               <td colSpan="7" className="no-data">
-                <FaInfoCircle /> {searchQuery ? 'No fines found matching your search' : 'No fines found'}
+                <Info /> {searchQuery ? 'No fines found matching your search' : 'No fines found'}
               </td>
             </tr>
           ) : (
@@ -179,21 +179,21 @@ const FinesTable = () => {
                 <td className="reason-cell">{fine.reason || 'N/A'}</td>
                 <td>
                   <span className={`status-badge ${fine.status?.toLowerCase()}`}>
-                    {fine.status === 'Paid' || fine.status === 'paid' ? <FaCheckCircle /> : <FaExclamationTriangle />}
+                    {fine.status === 'Paid' || fine.status === 'paid' ? <CheckCircle /> : <TriangleAlert />}
                     {fine.status || 'Unpaid'}
                   </span>
                 </td>
                 <td className="actions-cell">
                   {fine.status !== 'Paid' && fine.status !== 'paid' && (
                     <button className="btn-action btn-pay" onClick={() => handlePay(fine.id)}>
-                      <FaCheckCircle /> Mark Paid
+                      <CheckCircle /> Mark Paid
                     </button>
                   )}
                   <button className="btn-edit" onClick={() => handleEdit(fine)}>
-                    <FaEdit /> Edit
+                    <Edit /> Edit
                   </button>
                   <button className="btn-delete" onClick={() => handleDelete(fine.id)}>
-                    <FaTrash /> Delete
+                    <Trash2 /> Delete
                   </button>
                 </td>
               </tr>
@@ -249,7 +249,7 @@ const FineModal = ({ fine, onClose, onSave }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>{fine ? 'Edit Fine' : 'Add New Fine'}</h2>
-          <button className="close-btn" onClick={onClose}><FaTimes /></button>
+          <button className="close-btn" onClick={onClose}><X /></button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">

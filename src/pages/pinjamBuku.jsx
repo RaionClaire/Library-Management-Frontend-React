@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "../styles/pinjamBuku.css";
 import apiClient from "../utils/api.js";
-import { FaBook, FaCalendar, FaInfoCircle, FaCheckCircle } from "react-icons/fa";
+import { Book, Calendar, Info, CheckCircle } from "lucide-react";
 
 const mockBook = {
   id: 1,
@@ -90,14 +90,14 @@ export default function PinjamBuku() {
   return (
     <div className="pinjam-container">
       <div className="page-header">
-        <FaBook className="header-icon" />
+        <Book className="header-icon" />
         <h1 className="page-title">Loan Book</h1>
         <p className="page-subtitle">Complete the form below to borrow a book</p>
       </div>
 
       {error && (
         <div className="error-message">
-          <FaInfoCircle /> {error}
+          <Info /> {error}
         </div>
       )}
 
@@ -135,7 +135,7 @@ export default function PinjamBuku() {
         {/* Loan Form */}
         <form className="pinjam-form" onSubmit={handleSubmit}>
           <div className="form-header">
-            <FaCalendar /> <h3>Loan Information</h3>
+            <Calendar /> <h3>Loan Information</h3>
           </div>
           
           <div className="form-group">
@@ -172,14 +172,14 @@ export default function PinjamBuku() {
           </div>
 
           <div className="loan-info-box">
-            <FaInfoCircle className="info-icon" />
+            <Info className="info-icon" />
             <div>
               <h3>Loan Policy</h3>
               <ul>
-                <li><FaCheckCircle /> Loan period: <strong>14 days</strong></li>
-                <li><FaCheckCircle /> Late return fine: <strong>Rp 1,000 per day</strong></li>
-                <li><FaCheckCircle /> Maximum extensions: <strong>1 time (7 days)</strong></li>
-                <li><FaCheckCircle /> Please return the book on time to avoid fines</li>
+                <li><CheckCircle /> Loan period: <strong>14 days</strong></li>
+                <li><CheckCircle /> Late return fine: <strong>Rp 1,000 per day</strong></li>
+                <li><CheckCircle /> Maximum extensions: <strong>1 time (7 days)</strong></li>
+                <li><CheckCircle /> Please return the book on time to avoid fines</li>
               </ul>
             </div>
           </div>

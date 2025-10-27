@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/register.css";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../utils/api";
 
@@ -104,7 +104,7 @@ const Register = () => {
                   className="toggle-password"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? <EyeOff /> : <Eye />}
                 </span>
               </div>
             </div>
@@ -126,7 +126,7 @@ const Register = () => {
                   className="toggle-password"
                   onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
                 >
-                  {showPasswordConfirmation ? <FaEyeSlash /> : <FaEye />}
+                  {showPasswordConfirmation ? <EyeOff /> : <Eye />}
                 </span>
               </div>
             </div>

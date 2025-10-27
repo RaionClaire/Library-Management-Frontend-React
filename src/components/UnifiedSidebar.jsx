@@ -3,20 +3,20 @@ import { Link, useLocation } from "react-router-dom";
 import "./sidebar.css";
 import LogoutPopup from "../pages/logoutPopup.jsx";
 import {
-  FaThLarge,
-  FaBook,
-  FaClipboardList,
-  FaCog,
-  FaUser,
-  FaBell,
-  FaSignOutAlt,
-  FaChevronDown,
-  FaChevronUp,
-  FaHome,
-  FaUsers,
-  FaDollarSign,
-  FaBookReader,
-} from "react-icons/fa";
+  LayoutGrid,
+  Book,
+  ClipboardList,
+  Settings,
+  User,
+  Bell,
+  LogOut,
+  ChevronDown,
+  ChevronUp,
+  Home,
+  Users,
+  DollarSign,
+  BookOpen,
+} from "lucide-react";
 import { FaBookOpenReader } from "react-icons/fa6";
 
 const UnifiedSidebar = () => {
@@ -36,44 +36,44 @@ const UnifiedSidebar = () => {
     {
       path: "/home",
       label: "Beranda",
-      icon: <FaHome />,
+      icon: <Home />,
       roles: ["member"],
     },
     {
       path: "/totalBuku",
       label: "Total Buku",
-      icon: <FaBook />,
+      icon: <Book />,
       roles: ["member"],
     },
     {
       path: "/authors",
       label: "Penulis",
-      icon: <FaUser />,
+      icon: <User />,
       roles: ["member"],
     },
     {
       path: "/categories",
       label: "Kategori",
-      icon: <FaThLarge />,
+      icon: <LayoutGrid />,
       roles: ["member"],
     },
     {
       path: "/peminjaman",
       label: "Peminjaman Aktif",
-      icon: <FaClipboardList />,
+      icon: <ClipboardList />,
       roles: ["member"],
     },
     {
       path: "/member-fines",
       label: "Denda Saya",
-      icon: <FaDollarSign />,
+      icon: <DollarSign />,
       roles: ["member"],
     },
     // Admin-only items
     {
       path: "/admin",
       label: "Dashboard",
-      icon: <FaThLarge />,
+      icon: <LayoutGrid />,
       roles: ["admin"],
     },
   ];
@@ -82,19 +82,19 @@ const UnifiedSidebar = () => {
     {
       path: "/admin/books",
       label: "Manage Books",
-      icon: <FaBook />,
+      icon: <Book />,
       roles: ["admin"],
     },
     {
       path: "/admin/authors",
       label: "Manage Authors",
-      icon: <FaUser />,
+      icon: <User />,
       roles: ["admin"],
     },
     {
       path: "/admin/categories",
       label: "Manage Categories",
-      icon: <FaBookReader />,
+      icon: <BookOpen />,
       roles: ["admin"],
     },
     {
@@ -106,13 +106,13 @@ const UnifiedSidebar = () => {
     {
       path: "/admin/fines",
       label: "Manage Fines",
-      icon: <FaDollarSign />,
+      icon: <DollarSign />,
       roles: ["admin"],
     },
     {
       path: "/admin/users",
       label: "Manage Users",
-      icon: <FaUsers />,
+      icon: <Users />,
       roles: ["admin"],
     },
   ];
@@ -121,13 +121,13 @@ const UnifiedSidebar = () => {
     {
       path: "/profil",
       label: "Profil",
-      icon: <FaUser />,
+      icon: <User />,
       roles: ["member", "admin"],
     },
     {
       path: "/notification",
       label: "Notifikasi",
-      icon: <FaBell />,
+      icon: <Bell />,
       roles: ["member", "admin"],
     },
   ];
@@ -184,13 +184,13 @@ const UnifiedSidebar = () => {
             <>
               <li className="dropdown" onClick={handleManagementToggle}>
                 <span className="icon">
-                  <FaCog />
+                  <Settings />
                 </span>
                 <span>Management</span>
                 {openManagement ? (
-                  <FaChevronUp className="arrow-icon" />
+                  <ChevronUp className="arrow-icon" />
                 ) : (
-                  <FaChevronDown className="arrow-icon" />
+                  <ChevronDown className="arrow-icon" />
                 )}
               </li>
 
@@ -215,13 +215,13 @@ const UnifiedSidebar = () => {
           {/* Settings Dropdown */}
           <li className="dropdown" onClick={handleSettingsToggle}>
             <span className="icon">
-              <FaCog />
+              <Settings />
             </span>
             <span>{role === "admin" ? "Settings" : "Pengaturan"}</span>
             {openSettings ? (
-              <FaChevronUp className="arrow-icon" />
+              <ChevronUp className="arrow-icon" />
             ) : (
-              <FaChevronDown className="arrow-icon" />
+              <ChevronDown className="arrow-icon" />
             )}
           </li>
 
@@ -244,7 +244,7 @@ const UnifiedSidebar = () => {
           {/* Logout */}
           <li onClick={handleLogoutClick} style={{ cursor: "pointer" }}>
             <span className="icon">
-              <FaSignOutAlt />
+              <LogOut />
             </span>
             <span>{role === "admin" ? "Logout" : "Keluar"}</span>
           </li>

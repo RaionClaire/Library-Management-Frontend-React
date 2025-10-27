@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/LoansTable.css';
 import apiClient from '../utils/api';
-import { FaSearch, FaTimes, FaBook, FaEdit, FaTrash, FaPlus, FaInfoCircle, FaCheck, FaBan, FaClock, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { Search, X, Book, Edit, Trash2, Plus, Info, Check, Ban, Clock, CheckCircle, XCircle } from 'lucide-react';
 
 const LoansTable = () => {
   const [loans, setLoans] = useState([]);
@@ -177,10 +177,10 @@ const LoansTable = () => {
   return (
     <div className="loans-table-container">
       <div className="loans-table-header">
-        <h2><FaBook /> Manage Loans</h2>
+        <h2><Book /> Manage Loans</h2>
         <div className="header-actions">
           <div className="search-box">
-            <FaSearch className="search-icon" />
+            <Search className="search-icon" />
             <input
               type="text"
               placeholder="Search by book title or member name..."
@@ -189,14 +189,14 @@ const LoansTable = () => {
               className="search-input"
             />
             {searchQuery && (
-              <FaTimes 
+              <X 
                 className="clear-icon" 
                 onClick={() => setSearchQuery('')}
               />
             )}
           </div>
           <button className="btn-add" onClick={handleAdd}>
-            <FaPlus /> Add Loan
+            <Plus /> Add Loan
           </button>
         </div>
       </div>
@@ -207,13 +207,13 @@ const LoansTable = () => {
           className={`tab ${activeTab === 'all' ? 'active' : ''}`}
           onClick={() => setActiveTab('all')}
         >
-          <FaBook /> All Loans ({loans.length})
+          <Book /> All Loans ({loans.length})
         </button>
         <button 
           className={`tab ${activeTab === 'pending' ? 'active' : ''}`}
           onClick={() => setActiveTab('pending')}
         >
-          <FaClock /> Pending Requests ({pendingLoans.length})
+          <Clock /> Pending Requests ({pendingLoans.length})
         </button>
       </div>
 
@@ -243,7 +243,7 @@ const LoansTable = () => {
           {filteredLoans.length === 0 ? (
             <tr>
               <td colSpan="8" className="no-data">
-                <FaInfoCircle /> {searchQuery ? 'No loans found matching your search' : activeTab === 'pending' ? 'No pending loan requests' : 'No loans found'}
+                <Info /> {searchQuery ? 'No loans found matching your search' : activeTab === 'pending' ? 'No pending loan requests' : 'No loans found'}
               </td>
             </tr>
           ) : (
@@ -259,10 +259,10 @@ const LoansTable = () => {
                 <td>{loan.returned_at ? new Date(loan.returned_at).toLocaleDateString() : '-'}</td>
                 <td>
                   <span className={`status-badge ${loan.status?.toLowerCase()}`}>
-                    {loan.status === 'pending' && <FaClock />}
-                    {loan.status === 'borrowed' && <FaCheckCircle />}
-                    {loan.status === 'returned' && <FaCheck />}
-                    {loan.status === 'rejected' && <FaTimesCircle />}
+                    {loan.status === 'pending' && <Clock />}
+                    {loan.status === 'borrowed' && <CheckCircle />}
+                    {loan.status === 'returned' && <Check />}
+                    {loan.status === 'rejected' && <XCircle />}
                     {loan.status || 'Active'}
                   </span>
                 </td>
@@ -274,20 +274,20 @@ const LoansTable = () => {
                         onClick={() => handleApprove(loan.id)}
                         title="Approve loan request"
                       >
-                        <FaCheck /> Approve
+                        <Check /> Approve
                       </button>
                       <button 
                         className="btn-reject" 
                         onClick={() => handleReject(loan.id)}
                         title="Reject loan request"
                       >
-                        <FaBan /> Reject
+                        <Ban /> Reject
                       </button>
                       <button 
                         className="btn-delete" 
                         onClick={() => handleDelete(loan.id)}
                       >
-                        <FaTrash />
+                        <Trash2 />
                       </button>
                     </>
                   ) : (
@@ -312,13 +312,13 @@ const LoansTable = () => {
                         className="btn-edit" 
                         onClick={() => handleEdit(loan)}
                       >
-                        <FaEdit />
+                        <Edit />
                       </button>
                       <button 
                         className="btn-delete" 
                         onClick={() => handleDelete(loan.id)}
                       >
-                        <FaTrash />
+                        <Trash2 />
                       </button>
                     </>
                   )}
@@ -380,7 +380,7 @@ const LoanModal = ({ loan, onClose, onSave }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>{loan ? 'Edit Loan' : 'Add New Loan'}</h2>
-          <button className="close-btn" onClick={onClose}><FaTimes /></button>
+          <button className="close-btn" onClick={onClose}><X /></button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">

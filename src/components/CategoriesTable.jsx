@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/CategoriesTable.css';
 import apiClient from '../utils/api';
-import { FaSearch, FaTimes, FaTags, FaEdit, FaTrash, FaPlus, FaInfoCircle, FaBook } from 'react-icons/fa';
+import { Search, X, Tags, Edit, Trash2, Plus, Info, Book } from 'lucide-react';
 
 const CategoriesTable = () => {
   const [categories, setCategories] = useState([]);
@@ -95,10 +95,10 @@ const CategoriesTable = () => {
   return (
     <div className="categories-table-container">
       <div className="categories-table-header">
-        <h2><FaTags /> Manage Categories</h2>
+        <h2><Tags /> Manage Categories</h2>
         <div className="header-actions">
           <div className="search-box">
-            <FaSearch className="search-icon" />
+            <Search className="search-icon" />
             <input
               type="text"
               placeholder="Search categories by name or description..."
@@ -107,14 +107,14 @@ const CategoriesTable = () => {
               className="search-input"
             />
             {searchQuery && (
-              <FaTimes 
+              <X 
                 className="clear-icon" 
                 onClick={() => setSearchQuery('')}
               />
             )}
           </div>
           <button className="btn-add" onClick={handleAdd}>
-            <FaPlus /> Add Category
+            <Plus /> Add Category
           </button>
         </div>
       </div>
@@ -141,7 +141,7 @@ const CategoriesTable = () => {
           {filteredCategories.length === 0 ? (
             <tr>
               <td colSpan="5" className="no-data">
-                <FaInfoCircle /> {searchQuery ? 'No categories found matching your search' : 'No categories found'}
+                <Info /> {searchQuery ? 'No categories found matching your search' : 'No categories found'}
               </td>
             </tr>
           ) : (
@@ -159,10 +159,10 @@ const CategoriesTable = () => {
                 </td>
                 <td className="actions-cell">
                   <button className="btn-edit" onClick={(e) => { e.stopPropagation(); handleEdit(category); }}>
-                    <FaEdit /> Edit
+                    <Edit /> Edit
                   </button>
                   <button className="btn-delete" onClick={(e) => { e.stopPropagation(); handleDelete(category.id); }}>
-                    <FaTrash /> Delete
+                    <Trash2 /> Delete
                   </button>
                 </td>
               </tr>
@@ -213,7 +213,7 @@ const CategoryModal = ({ category, onClose, onSave }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>{category ? 'Edit Category' : 'Add New Category'}</h2>
-          <button className="close-btn" onClick={onClose}><FaTimes /></button>
+          <button className="close-btn" onClick={onClose}><X /></button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -271,8 +271,8 @@ const CategoryDetailModal = ({ category, onClose, onEdit }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content detail-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2><FaInfoCircle /> Category Details</h2>
-          <button className="close-btn" onClick={onClose}><FaTimes /></button>
+          <h2><Info /> Category Details</h2>
+          <button className="close-btn" onClick={onClose}><X /></button>
         </div>
         
         <div className="detail-content">
@@ -301,7 +301,7 @@ const CategoryDetailModal = ({ category, onClose, onEdit }) => {
 
           {books.length > 0 && (
             <div className="detail-section">
-              <h3><FaBook /> Books in this Category</h3>
+              <h3><Book /> Books in this Category</h3>
               <div className="books-list">
                 {loadingBooks ? (
                   <p>Loading books...</p>
@@ -331,7 +331,7 @@ const CategoryDetailModal = ({ category, onClose, onEdit }) => {
         <div className="modal-actions">
           <button type="button" className="btn-cancel" onClick={onClose}>Close</button>
           <button type="button" className="btn-edit" onClick={() => onEdit(category)}>
-            <FaEdit /> Edit Category
+            <Edit /> Edit Category
           </button>
         </div>
       </div>

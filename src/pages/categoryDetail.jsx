@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/categoryDetail.css";
-import { FaArrowLeft, FaBook } from "react-icons/fa";
+import { ArrowLeft, Book } from "lucide-react";
 import apiClient from "../utils/api.js";
 
 // Category icon/color mapping
@@ -86,7 +86,7 @@ const CategoryDetail = () => {
   return (
     <div className="category-detail-container">
       <button type="button" className="back-btn" onClick={() => navigate(-1)}>
-        <FaArrowLeft /> Back
+        <ArrowLeft /> Back
       </button>
 
       {/* Category Header */}
@@ -99,7 +99,7 @@ const CategoryDetail = () => {
           <p className="category-description-detail">{category.description || "Explore books in this category"}</p>
           <div className="category-stats-detail">
             <div className="stat-item" style={{ background: `${category.color}15`, color: category.color }}>
-              <FaBook className="stat-icon" />
+              <Book className="stat-icon" />
               <span>{category.books_count || category.booksCount || books.length} Books Available</span>
             </div>
           </div>

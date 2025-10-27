@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/authors.css";
-import { FaUser, FaBook, FaSearch } from "react-icons/fa";
+import { User, Book, Search } from "lucide-react";
 import apiClient from "../utils/api.js";
 
 const Authors = () => {
@@ -56,7 +56,7 @@ const Authors = () => {
 
       {/* Search Bar */}
       <div className="search-bar">
-        <FaSearch className="search-icon" />
+        <Search className="search-icon" />
         <input
           type="text"
           placeholder="Search authors by name..."
@@ -71,7 +71,7 @@ const Authors = () => {
         <p className="loading">Loading authors...</p>
       ) : filteredAuthors.length === 0 ? (
         <div className="no-results">
-          <FaUser className="no-results-icon" />
+          <User className="no-results-icon" />
           <p>No authors found</p>
         </div>
       ) : (
@@ -95,7 +95,7 @@ const Authors = () => {
                 <h3 className="author-name">{author.name}</h3>
                 <p className="author-bio">{author.biography || author.bio || "No biography available"}</p>
                 <div className="author-stats">
-                  <FaBook className="stats-icon" />
+                  <Book className="stats-icon" />
                   <span>{author.books_count || author.booksCount || 0} Books</span>
                 </div>
               </div>

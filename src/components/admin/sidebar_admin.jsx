@@ -3,20 +3,20 @@ import { Link, useLocation } from "react-router-dom";
 import "../sidebar.css";
 import LogoutPopup from "../../pages/logoutPopup.jsx";
 import {
-  FaThLarge,
-  FaBook,
-  FaClipboardList,
-  FaCog,
-  FaUser,
-  FaBell,
-  FaSignOutAlt,
-  FaChevronDown,
-  FaChevronUp,
-  FaHome,
-  FaUsers,
-  FaDollarSign,
-  FaBookReader,
-} from "react-icons/fa";
+  LayoutGrid,
+  Book,
+  ClipboardList,
+  Settings,
+  User,
+  Bell,
+  LogOut,
+  ChevronDown,
+  ChevronUp,
+  Home,
+  Users,
+  DollarSign,
+  BookOpen,
+} from "lucide-react";
 import { FaBookOpenReader } from "react-icons/fa6";
 
 const SidebarAdmin = () => {
@@ -35,21 +35,21 @@ const SidebarAdmin = () => {
   }, []);
 
   const menuItems = [
-    { path: "/admin", label: "Dashboard", icon: <FaThLarge /> },
+    { path: "/admin", label: "Dashboard", icon: <LayoutGrid /> },
   ];
 
   const managementItems = [
-    { path: "/admin/books", label: "Manage Books", icon: <FaBook /> },
-    { path: "/admin/authors", label: "Manage Authors", icon: <FaUser /> },
-    { path: "/admin/categories", label: "Manage Categories", icon: <FaBookReader /> },
+    { path: "/admin/books", label: "Manage Books", icon: <Book /> },
+    { path: "/admin/authors", label: "Manage Authors", icon: <User /> },
+    { path: "/admin/categories", label: "Manage Categories", icon: <BookOpen /> },
     { path: "/admin/loans", label: "Manage Loans", icon: <FaBookOpenReader /> },
-    { path: "/admin/fines", label: "Manage Fines", icon: <FaDollarSign /> },
-    { path: "/admin/users", label: "Manage Users", icon: <FaUsers /> },
+    { path: "/admin/fines", label: "Manage Fines", icon: <DollarSign /> },
+    { path: "/admin/users", label: "Manage Users", icon: <Users /> },
   ];
 
   const settingsItems = [
-    { path: "/profil", label: "Profil", icon: <FaUser /> },
-    { path: "/notification", label: "Notifikasi", icon: <FaBell /> },
+    { path: "/profil", label: "Profil", icon: <User /> },
+    { path: "/notification", label: "Notifikasi", icon: <Bell /> },
   ];
 
   const handleSettingsToggle = (e) => {
@@ -90,13 +90,13 @@ const SidebarAdmin = () => {
             onClick={handleManagementToggle}
           >
             <span className="icon">
-              <FaCog />
+              <Settings />
             </span>
             <span>Management</span>
             {openManagement ? (
-              <FaChevronUp className="arrow-icon" />
+              <ChevronUp className="arrow-icon" />
             ) : (
-              <FaChevronDown className="arrow-icon" />
+              <ChevronDown className="arrow-icon" />
             )}
           </li>
 
@@ -121,13 +121,13 @@ const SidebarAdmin = () => {
             onClick={handleSettingsToggle}
           >
             <span className="icon">
-              <FaCog />
+              <Settings />
             </span>
             <span>Settings</span>
             {openSettings ? (
-              <FaChevronUp className="arrow-icon" />
+              <ChevronUp className="arrow-icon" />
             ) : (
-              <FaChevronDown className="arrow-icon" />
+              <ChevronDown className="arrow-icon" />
             )}
           </li>
 
@@ -150,7 +150,7 @@ const SidebarAdmin = () => {
           {/* Tombol keluar */}
           <li onClick={handleLogoutClick} style={{ cursor: "pointer" }}>
             <span className="icon">
-              <FaSignOutAlt />
+              <LogOut />
             </span>
             <span>Logout</span>
           </li>

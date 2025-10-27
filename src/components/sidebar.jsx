@@ -3,17 +3,17 @@ import { Link, useLocation } from "react-router-dom";
 import "./sidebar.css";
 import LogoutPopup from "../pages/logoutPopup.jsx";
 import {
-  FaThLarge,
-  FaBook,
-  FaClipboardList,
-  FaCog,
-  FaUser,
-  FaBell,
-  FaSignOutAlt,
-  FaChevronDown,
-  FaChevronUp,
-  FaHome,
-} from "react-icons/fa";
+  LayoutGrid,
+  Book,
+  ClipboardList,
+  Settings,
+  User,
+  Bell,
+  LogOut,
+  ChevronDown,
+  ChevronUp,
+  Home,
+} from "lucide-react";
 import { FaBookOpenReader } from "react-icons/fa6";
 
 const Sidebar = () => {
@@ -31,25 +31,25 @@ const Sidebar = () => {
   }, []);
 
   const menuItems = [
-    { path: "/home", label: "Beranda", icon: <FaHome /> },
-    { path: "/totalBuku", label: "Total Buku", icon: <FaBook /> },
-    { path: "/authors", label: "Penulis", icon: <FaUser /> },
-    { path: "/categories", label: "Kategori", icon: <FaThLarge /> },
+    { path: "/home", label: "Beranda", icon: <Home /> },
+    { path: "/totalBuku", label: "Total Buku", icon: <Book /> },
+    { path: "/authors", label: "Penulis", icon: <User /> },
+    { path: "/categories", label: "Kategori", icon: <LayoutGrid /> },
     {
       path: "/peminjaman",
       label: "Peminjaman Aktif",
-      icon: <FaClipboardList />,
+      icon: <ClipboardList />,
     },
     {
       path: "/member-fines",
       label: "Denda Saya",
-      icon: <FaBell />,
+      icon: <Bell />,
     },
   ];
 
   const settingsItems = [
-    { path: "/profil", label: "Profil", icon: <FaUser /> },
-    { path: "/notification", label: "Notifikasi", icon: <FaBell /> },
+    { path: "/profil", label: "Profil", icon: <User /> },
+    { path: "/notification", label: "Notifikasi", icon: <Bell /> },
   ];
 
   const handleSettingsToggle = (e) => {
@@ -85,7 +85,7 @@ const Sidebar = () => {
               className={currentPath === "/admin" ? "active" : ""}
             >
               <Link to="/admin">
-                <span className="icon"><FaThLarge /></span>
+                <span className="icon"><LayoutGrid /></span>
                 <span>Admin Dashboard</span>
               </Link>
             </li>
@@ -96,13 +96,13 @@ const Sidebar = () => {
             onClick={handleSettingsToggle}
           >
             <span className="icon">
-              <FaCog />
+              <Settings />
             </span>
             <span>Pengaturan</span>
             {openSettings ? (
-              <FaChevronUp className="arrow-icon" />
+              <ChevronUp className="arrow-icon" />
             ) : (
-              <FaChevronDown className="arrow-icon" />
+              <ChevronDown className="arrow-icon" />
             )}
           </li>
 
@@ -125,7 +125,7 @@ const Sidebar = () => {
           {/* Tombol keluar */}
           <li onClick={handleLogoutClick} style={{ cursor: "pointer" }}>
             <span className="icon">
-              <FaSignOutAlt />
+              <LogOut />
             </span>
             <span>Keluar</span>
           </li>

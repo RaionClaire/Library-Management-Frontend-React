@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/authorDetail.css";
-import { FaArrowLeft, FaBook } from "react-icons/fa";
+import { ArrowLeft, Book } from "lucide-react";
 import apiClient from "../utils/api.js";
 
 const AuthorDetail = () => {
@@ -67,7 +67,7 @@ const AuthorDetail = () => {
   return (
     <div className="author-detail-container">
       <button type="button" className="back-btn" onClick={() => navigate(-1)}>
-        <FaArrowLeft /> Back
+        <ArrowLeft /> Back
       </button>
 
       {/* Author Header */}
@@ -86,7 +86,7 @@ const AuthorDetail = () => {
           <p className="author-bio-detail">{author.biography || author.bio || "No biography available"}</p>
           <div className="author-stats-detail">
             <div className="stat-item">
-              <FaBook className="stat-icon" />
+              <Book className="stat-icon" />
               <span>{author.books_count || author.booksCount || books.length} Books Published</span>
             </div>
           </div>

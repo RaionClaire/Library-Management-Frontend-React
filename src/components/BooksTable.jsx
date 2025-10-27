@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/BooksTable.css';
 import apiClient from '../utils/api';
-import { FaSearch, FaTimes, FaBook, FaEdit, FaTrash, FaPlus, FaInfoCircle } from 'react-icons/fa';
+import { Search, X, Book, Edit, Trash2, Plus, Info } from 'lucide-react';
 
 const BooksTable = () => {
   const [books, setBooks] = useState([]);
@@ -133,10 +133,10 @@ const BooksTable = () => {
   return (
     <div className="books-table-container">
       <div className="books-table-header">
-        <h2><FaBook /> Manage Books</h2>
+        <h2><Book /> Manage Books</h2>
         <div className="header-actions">
           <div className="search-box">
-            <FaSearch className="search-icon" />
+            <Search className="search-icon" />
             <input
               type="text"
               placeholder="Search books by title, author, category, or ISBN..."
@@ -145,14 +145,14 @@ const BooksTable = () => {
               className="search-input"
             />
             {searchQuery && (
-              <FaTimes 
+              <X 
                 className="clear-icon" 
                 onClick={() => setSearchQuery('')}
               />
             )}
           </div>
           <button className="btn-add" onClick={handleAdd}>
-            <FaPlus /> Add Book
+            <Plus /> Add Book
           </button>
         </div>
       </div>
@@ -182,7 +182,7 @@ const BooksTable = () => {
           {filteredBooks.length === 0 ? (
             <tr>
               <td colSpan="8" className="no-data">
-                <FaInfoCircle /> {searchQuery ? 'No books found matching your search' : 'No books found'}
+                <Info /> {searchQuery ? 'No books found matching your search' : 'No books found'}
               </td>
             </tr>
           ) : (
@@ -210,10 +210,10 @@ const BooksTable = () => {
                 </td>
                 <td className="actions-cell">
                   <button className="btn-edit" onClick={(e) => { e.stopPropagation(); handleEdit(book); }}>
-                    <FaEdit /> Edit
+                    <Edit /> Edit
                   </button>
                   <button className="btn-delete" onClick={(e) => { e.stopPropagation(); handleDelete(book.id); }}>
-                    <FaTrash /> Delete
+                    <Trash2 /> Delete
                   </button>
                 </td>
               </tr>
@@ -249,8 +249,8 @@ const BookDetailModal = ({ book, onClose, onEdit }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content detail-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2><FaInfoCircle /> Book Details</h2>
-          <button className="close-btn" onClick={onClose}><FaTimes /></button>
+          <h2><Info /> Book Details</h2>
+          <button className="close-btn" onClick={onClose}><X /></button>
         </div>
         
         <div className="detail-content">
@@ -298,7 +298,7 @@ const BookDetailModal = ({ book, onClose, onEdit }) => {
         <div className="modal-actions">
           <button type="button" className="btn-cancel" onClick={onClose}>Close</button>
           <button type="button" className="btn-edit" onClick={() => onEdit(book)}>
-            <FaEdit /> Edit Book
+            <Edit /> Edit Book
           </button>
         </div>
       </div>
@@ -404,7 +404,7 @@ const BookModal = ({ book, onClose, onSave }) => {
       <div className="modal-content scrollable" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>{book ? 'Edit Book' : 'Add New Book'}</h2>
-          <button className="close-btn" onClick={onClose}><FaTimes /></button>
+          <button className="close-btn" onClick={onClose}><X /></button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">

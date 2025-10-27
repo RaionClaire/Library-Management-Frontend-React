@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaPen } from "react-icons/fa";
+import { Pen } from "lucide-react";
 import "../styles/profil.css";
 import { Link } from "react-router-dom";
 import apiClient from "../utils/api";
@@ -113,7 +113,7 @@ export default function Profil() {
             <div className="profil-foto-container">
               <img src={user.avatar || defaultAvatar} alt="Profile Avatar" className="profil-foto" />
               <label htmlFor="upload-foto" className="edit-foto-icon">
-                <FaPen />
+                <Pen />
               </label>
               <input
                 id="upload-foto"
@@ -134,7 +134,7 @@ export default function Profil() {
                   disabled={!isEditing}
                   onChange={handleChange}
                 />
-                {!isEditing && <FaPen className="edit-icon" onClick={() => setIsEditing(true)} />}
+                {!isEditing && <Pen className="edit-icon" onClick={() => setIsEditing(true)} />}
               </div>
 
               <label>Email</label>
@@ -146,7 +146,7 @@ export default function Profil() {
                   disabled={!isEditing}
                   onChange={handleChange}
                 />
-                {!isEditing && <FaPen className="edit-icon" onClick={() => setIsEditing(true)} />}
+                {!isEditing && <Pen className="edit-icon" onClick={() => setIsEditing(true)} />}
               </div>
 
               {user.role && (
