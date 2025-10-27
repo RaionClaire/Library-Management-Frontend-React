@@ -1,100 +1,56 @@
-/* ===== Halaman utama ===== */
-.notifikasi-container {
-  min-height: 100vh;
-  background-color: #f6f7fb;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 50px 20px;
-  font-family: "Poppins", sans-serif;
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
 }
 
-/* ===== Judul ===== */
-.notifikasi-title {
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-bottom: 30px;
+.summary-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.summary-card h4 {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.summary-card p {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
   color: #333;
 }
 
-/* ===== Box notifikasi ===== */
-.notifikasi-box {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  width: 100%;
-  max-width: 600px;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-}
-
-/* ===== Ikon ===== */
-.icon {
-  font-size: 20px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  flex-shrink: 0;
-}
-
-/* ===== Teks ===== */
-.text h4 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.text p {
-  margin: 4px 0 0;
-  font-size: 0.95rem;
-  color: #555;
-}
-
-/* ===== Varian Warna ===== */
-
-/* ✅ Berhasil */
-.success {
+.notifikasi-box.success {
   background-color: #e9fbf0;
   border-color: #c1f1d2;
 }
-
-.success .icon {
+.notifikasi-box.success .icon {
   background-color: #3ac57d;
   color: #fff;
 }
 
-/* ⚠ Pengingat */
-.reminder {
+.notifikasi-box.reminder {
   background-color: #fff8e5;
   border-color: #ffe8b2;
 }
-
-.reminder .icon {
+.notifikasi-box.reminder .icon {
   background-color: #f5b400;
   color: #fff;
 }
 
-/* ❌ Peringatan */
-.warning {
+.notifikasi-box.warning {
   background-color: #ffeaea;
   border-color: #ffc9c9;
 }
-
-.warning .icon {
+.notifikasi-box.warning .icon {
   background-color: #e14b4b;
   color: #fff;
-}
-
-/* Hover efek */
-.notifikasi-box:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
 }

@@ -40,12 +40,6 @@ const UnifiedSidebar = () => {
       roles: ["member"],
     },
     {
-      path: "/totalBuku",
-      label: "Total Buku",
-      icon: <Book />,
-      roles: ["member"],
-    },
-    {
       path: "/authors",
       label: "Penulis",
       icon: <User />,
@@ -128,7 +122,7 @@ const UnifiedSidebar = () => {
       path: "/notification",
       label: "Notifikasi",
       icon: <Bell />,
-      roles: ["member", "admin"],
+      roles: ["member"],
     },
   ];
 

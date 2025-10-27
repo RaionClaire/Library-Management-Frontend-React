@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/FinesTable.css';
-import apiClient from '../utils/api';
+import apiClient from '../utils/api.js';
 import { Search, X, DollarSign, Edit, Trash2, Plus, Info, CheckCircle, TriangleAlert } from 'lucide-react';
 
 const FinesTable = () => {
   const [fines, setFines] = useState([]);
   const [filteredFines, setFilteredFines] = useState([]);
+  const [summary, setSummary] = useState({ total_amount: 0, paid_amount: 0, unpaid_amount: 0 });
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFine, setSelectedFine] = useState(null);
@@ -25,10 +26,13 @@ const FinesTable = () => {
       setLoading(true);
       const response = await apiClient.get('/admin/fines');
       console.log('Fines response:', response.data);
-      // Handle nested paginated response: response.data.fines.data
+      // Handle nested/paginated response and summary
+      // fines may be under response.data.fines.data or response.data.data or response.data.fines
       const finesData = response.data.fines?.data || response.data.data || response.data.fines || response.data || [];
+      const summaryData = response.data.summary || response.data.meta || {};
       setFines(finesData);
       setFilteredFines(finesData);
+      setSummary(summaryData);
       setError('');
     } catch (error) {
       console.error('Failed to fetch fines:', error);
@@ -51,7 +55,7 @@ const FinesTable = () => {
       const filtered = fines.filter(fine =>
         (fine.user?.name && fine.user.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (fine.member_name && fine.member_name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (fine.reason && fine.reason.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (fine.note && fine.note.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (fine.loan_id && fine.loan_id.toString().includes(searchQuery))
       );
       setFilteredFines(filtered);
@@ -73,7 +77,8 @@ const FinesTable = () => {
     
     try {
       await apiClient.delete(`/admin/fines/${fineId}`);
-      setFines(fines.filter(fine => fine.id !== fineId));
+      // refetch to update list and summary (API enforces only delete if paid)
+      await fetchFines();
     } catch (error) {
       console.error('Failed to delete fine:', error);
       alert('Failed to delete fine: ' + (error.response?.data?.message || error.message));
@@ -83,8 +88,8 @@ const FinesTable = () => {
   const handlePay = async (fineId) => {
     try {
       const response = await apiClient.post(`/admin/fines/${fineId}/pay`);
-      const updatedFine = response.data.fine || response.data.data || response.data;
-      setFines(fines.map(fine => fine.id === fineId ? updatedFine : fine));
+      // After payment, refetch to get updated status and updated summary
+      await fetchFines();
     } catch (error) {
       console.error('Failed to mark fine as paid:', error);
       alert('Failed to mark fine as paid: ' + (error.response?.data?.message || error.message));
@@ -94,13 +99,13 @@ const FinesTable = () => {
   const handleSave = async (fine) => {
     try {
       if (fine.id) {
-        const response = await apiClient.put(`/admin/fines/${fine.id}`, fine);
-        const updatedFine = response.data.fine || response.data.data || response.data;
-        setFines(fines.map(f => f.id === fine.id ? updatedFine : f));
+        await apiClient.put(`/admin/fines/${fine.id}`, fine);
+        // refetch to get latest list and summary
+        await fetchFines();
       } else {
-        const response = await apiClient.post('/admin/fines', fine);
-        const newFine = response.data.fine || response.data.data || response.data;
-        setFines([...fines, newFine]);
+        await apiClient.post('/admin/fines', fine);
+        // refetch to include new fine and updated summary
+        await fetchFines();
       }
       setIsModalOpen(false);
     } catch (error) {
@@ -115,6 +120,26 @@ const FinesTable = () => {
     <div className="fines-table-container">
       <div className="fines-table-header">
         <h2><DollarSign /> Manage Fines</h2>
+        <div className="fines-summary-cards">
+          <div className="summary-card total">
+            <div className="summary-content">
+              <h3>Total Fines</h3>
+              <p className="summary-amount">Rp{Number(summary.total_amount || 0).toFixed(2)}</p>
+            </div>
+          </div>
+          <div className="summary-card amount">
+            <div className="summary-content">
+              <h3>Paid</h3>
+              <p className="summary-number">Rp{Number(summary.paid_amount || 0).toFixed(2)}</p>
+            </div>
+          </div>
+          <div className="summary-card unpaid">
+            <div className="summary-content">
+              <h3>Unpaid</h3>
+              <p className="summary-number">Rp{Number(summary.unpaid_amount || 0).toFixed(2)}</p>
+            </div>
+          </div>
+        </div>
         <div className="header-actions">
           <div className="search-box">
             <Search className="search-icon" />
@@ -151,9 +176,9 @@ const FinesTable = () => {
           <tr>
             <th>ID</th>
             <th>Member</th>
-            <th>Loan ID</th>
+            <th>Book Title</th>
             <th>Amount</th>
-            <th>Reason</th>
+            <th>Note</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -170,13 +195,13 @@ const FinesTable = () => {
               <tr key={fine.id}>
                 <td>{fine.id}</td>
                 <td className="member-name-cell">
-                  <strong>{fine.user?.name || fine.user.name || 'N/A'}</strong>
+                  <strong>{fine.loan?.member?.user?.name || 'N/A'}</strong>
                 </td>
-                <td>#{fine.loan_id || 'N/A'}</td>
+                <td>{fine.loan.book.title || 'N/A'}</td>
                 <td className="amount-cell">
-                  <strong>${fine.amount ? parseFloat(fine.amount).toFixed(2) : '0.00'}</strong>
+                  <strong>Rp{fine.amount ? parseFloat(fine.amount).toFixed(2) : '0.00'}</strong>
                 </td>
-                <td className="reason-cell">{fine.reason || 'N/A'}</td>
+                <td className="note-cell">{fine.note || 'N/A'}</td>
                 <td>
                   <span className={`status-badge ${fine.status?.toLowerCase()}`}>
                     {fine.status === 'Paid' || fine.status === 'paid' ? <CheckCircle /> : <TriangleAlert />}
@@ -215,7 +240,7 @@ const FinesTable = () => {
 
 const FineModal = ({ fine, onClose, onSave }) => {
   const [formData, setFormData] = useState(
-    fine || { loan_id: '', amount: '', reason: '' }
+    fine || { loan_id: '', amount: '', note: '' }
   );
   const [loans, setLoans] = useState([]);
 
@@ -236,7 +261,27 @@ const FineModal = ({ fine, onClose, onSave }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const newForm = { ...formData, [name]: value };
+    setFormData(newForm);
+
+    // If loan selection changes, try to preview fine calculation
+    if (name === 'loan_id' && value) {
+      previewCalculation(value, newForm);
+    }
+  };
+
+  const previewCalculation = async (loanId, currentForm) => {
+    try {
+      const resp = await apiClient.get(`/admin/fines/calculate/${loanId}`);
+      // the API should return an amount preview, e.g. { amount: 12.5 }
+      const amount = resp.data.amount || resp.data.data?.amount || resp.data?.fine?.amount;
+      if (amount !== undefined && (!currentForm.amount || currentForm.amount === '')) {
+        setFormData(prev => ({ ...prev, amount }));
+      }
+    } catch (err) {
+      // silent fail: preview is optional
+      console.debug('Failed to preview fine calculation:', err?.message || err);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -276,8 +321,8 @@ const FineModal = ({ fine, onClose, onSave }) => {
             />
           </div>
           <div className="form-group">
-            <label>Reason</label>
-            <textarea name="reason" value={formData.reason || ''} onChange={handleChange} rows="3"></textarea>
+            <label>Note</label>
+            <textarea name="note" value={formData.note || ''} onChange={handleChange} rows="3"></textarea>
           </div>
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>Cancel</button>

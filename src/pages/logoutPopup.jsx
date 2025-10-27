@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/logoutPopup.css";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../utils/api";
+import apiClient from "../utils/api.js";
 
 export default function LogoutPopup({ isOpen, onClose }) {
   const navigate = useNavigate();

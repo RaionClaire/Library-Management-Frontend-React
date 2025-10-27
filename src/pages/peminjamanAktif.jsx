@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/peminjamanAktif.css";
-import apiClient from "../utils/api";
+import apiClient from "../utils/api.js";
 import { Book, Calendar, Search, X, Clock, CheckCircle, TriangleAlert } from "lucide-react";
 
 export default function PeminjamanAktif() {
@@ -46,17 +46,26 @@ export default function PeminjamanAktif() {
   };
 
   const getStatusInfo = (loan) => {
-    const dueDate = new Date(loan.due_at);
-    const today = new Date();
-    const isOverdue = dueDate < today && loan.status !== 'Returned';
-    
-    if (loan.status === 'Returned') {
-      return { label: 'Returned', class: 'returned', icon: <CheckCircle /> };
-    } else if (isOverdue) {
-      return { label: 'Overdue', class: 'overdue', icon: <TriangleAlert /> };
-    } else {
-      return { label: 'Active', class: 'active', icon: <Clock /> };
+    const status = String(loan.status || '').toLowerCase();
+
+    if (status === 'pending') {
+      return { label: 'Pending', class: 'pending', icon: <Clock /> };
     }
+
+    if (status === 'returned') {
+      return { label: 'Returned', class: 'returned', icon: <CheckCircle /> };
+    }
+
+    // Only compute overdue when due_at exists and is a valid date
+    if (loan.due_at) {
+      const dueDate = new Date(loan.due_at);
+      const today = new Date();
+      if (!isNaN(dueDate.getTime()) && dueDate < today && status !== 'returned') {
+        return { label: 'Overdue', class: 'overdue', icon: <TriangleAlert /> };
+      }
+    }
+
+    return { label: 'Active', class: 'active', icon: <Clock /> };
   };
 
   if (loading) {
@@ -113,31 +122,39 @@ export default function PeminjamanAktif() {
                 <h3 className="buku-judul">{loan.book?.title || loan.bookTitle}</h3>
                 <p className="buku-author">by {loan.book?.author?.name || 'Unknown'}</p>
                 
-                <div className="buku-dates">
-                  <div className="date-item">
-                    <Calendar className="date-icon" />
-                    <div>
-                      <span className="date-label">Loan Date:</span>
-                      <span className="date-value">{new Date(loan.loaned_at).toLocaleDateString()}</span>
-                    </div>
-                  </div>
-                  <div className="date-item">
-                    <Calendar className="date-icon" />
-                    <div>
-                      <span className="date-label">Due Date:</span>
-                      <span className="date-value">{new Date(loan.due_at).toLocaleDateString()}</span>
-                    </div>
-                  </div>
-                  {loan.returned_at && (
-                    <div className="date-item">
-                      <CheckCircle className="date-icon" />
-                      <div>
-                        <span className="date-label">Returned:</span>
-                        <span className="date-value">{new Date(loan.returned_at).toLocaleDateString()}</span>
+                {String(loan.status || '').toLowerCase() !== 'pending' && (
+                  <div className="buku-dates">
+                    {loan.loaned_at && (
+                      <div className="date-item">
+                        <Calendar className="date-icon" />
+                        <div>
+                          <span className="date-label">Loan Date:</span>
+                          <span className="date-value">{new Date(loan.loaned_at).toLocaleDateString()}</span>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
+                    )}
+
+                    {loan.due_at && (
+                      <div className="date-item">
+                        <Calendar className="date-icon" />
+                        <div>
+                          <span className="date-label">Due Date:</span>
+                          <span className="date-value">{new Date(loan.due_at).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {loan.returned_at && (
+                      <div className="date-item">
+                        <CheckCircle className="date-icon" />
+                        <div>
+                          <span className="date-label">Returned:</span>
+                          <span className="date-value">{new Date(loan.returned_at).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 <div className={`buku-status ${statusInfo.class}`}>
                   {statusInfo.icon}

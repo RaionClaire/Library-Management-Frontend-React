@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Pen } from "lucide-react";
 import "../styles/profil.css";
 import { Link } from "react-router-dom";
-import apiClient from "../utils/api";
+import apiClient from "../utils/api.js";
 
 const defaultAvatar = new URL("../asset/profil.png", import.meta.url).href;
 

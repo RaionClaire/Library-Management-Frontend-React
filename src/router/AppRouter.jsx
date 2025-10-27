@@ -72,11 +72,12 @@ function AppRoutes() {
               <Route path="/pinjamBuku/:id" element={<PinjamBuku />} />
               <Route path="/peminjaman" element={<PeminjamanAktif />} />
               <Route path="/member-fines" element={<MemberFines />} />
+              <Route path="/notification" element={<Notifikasi />} />
+
             </Route>
 
             {/* Protected routes - SHARED (both admin and member can access) */}
             <Route path="/profil" element={<Profile />} />
-            <Route path="/notification" element={<Notifikasi />} />
             <Route path="/ubahPassword" element={<UbahPassword />} />
 
             {/* Protected routes - ADMIN ONLY */}

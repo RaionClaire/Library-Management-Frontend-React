@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/register.css";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import apiClient from "../utils/api";
+import apiClient from "../utils/api.js";
 
 // ✅ Gunakan new URL agar path gambar selalu benar di semua bundler
 const logo = new URL("../asset/logo.png", import.meta.url).href;

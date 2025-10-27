@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/ubahPassword.css";
 import { Eye, EyeOff } from "lucide-react";
-import apiClient from "../utils/api";
+import apiClient from "../utils/api.js";
 import { useNavigate } from "react-router-dom";
 
 const UbahPassword = () => {

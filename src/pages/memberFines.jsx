@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/memberFines.css";
 import { Banknote, CheckCircle, TriangleAlert } from "lucide-react";
-// import apiClient from "../utils/api.js";
+import apiClient from "../utils/api.js";
 
 const mockFines = [
   {
@@ -47,59 +47,64 @@ const MemberFines = () => {
     fetchUnpaidSummary();
   }, []);
 
-  const fetchFines = () => {
+  const fetchFines = async () => {
     setLoading(true);
     try {
-      // Real API call when backend is available:
-      // const response = await apiClient.get("/member/fines");
-      // setFines(response.data);
-      
-      // Mock data for now
-      setFines(mockFines);
+      // Assumption: apiClient is configured for member base path or will accept /fines
+      const response = await apiClient.get("/member/fines");
+      // response.data may be an array or nested (e.g., data.data)
+      const finesData = response.data?.data || response.data || [];
+      setFines(Array.isArray(finesData) ? finesData : []);
     } catch (error) {
-      console.error("Failed to fetch fines:", error);
+      console.error("Failed to fetch fines, falling back to mock:", error);
+      // fallback to mock data so UI remains usable
+      setFines(mockFines);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchUnpaidSummary = () => {
+  const fetchUnpaidSummary = async () => {
     try {
-      // Real API call when backend is available:
-      // const response = await apiClient.get("/member/fines/unpaid/summary");
-      // setSummary(response.data);
-      
-      // Mock calculation
-      const unpaidFines = mockFines.filter(f => f.status === "unpaid");
-      const totalUnpaid = unpaidFines.reduce((sum, fine) => sum + fine.amount, 0);
-      setSummary({
-        total: mockFines.length,
-        unpaid: unpaidFines.length,
-        totalAmount: totalUnpaid,
-      });
+      const response = await apiClient.get("/member/fines/unpaid/summary");
+      // Expected response: { unpaid_fines: [...], total_unpaid, count } or similar
+      const data = response.data || response;
+      // Try common shapes, fallback to computing from current fines
+      if (data.unpaid_fines || data.total_unpaid !== undefined) {
+        setSummary({
+          total: fines.length || 0,
+          unpaid: data.count ?? (data.unpaid_fines ? data.unpaid_fines.length : 0),
+          totalAmount: data.total_unpaid ?? data.total_unpaid_amount ?? 0,
+        });
+      } else {
+        // fallback compute from fines state
+        const unpaidFines = (fines.length ? fines : mockFines).filter((f) => f.status === "unpaid");
+        const totalUnpaid = unpaidFines.reduce((sum, fine) => sum + fine.amount, 0);
+        setSummary({ total: (fines.length || mockFines.length), unpaid: unpaidFines.length, totalAmount: totalUnpaid });
+      }
     } catch (error) {
-      console.error("Failed to fetch unpaid summary:", error);
+      console.error("Failed to fetch unpaid summary, falling back to computed summary:", error);
+      const unpaidFines = (fines.length ? fines : mockFines).filter((f) => f.status === "unpaid");
+      const totalUnpaid = unpaidFines.reduce((sum, fine) => sum + fine.amount, 0);
+      setSummary({ total: (fines.length || mockFines.length), unpaid: unpaidFines.length, totalAmount: totalUnpaid });
     }
   };
 
   const handlePayFine = async (fineId) => {
     setPayingFineId(fineId);
     try {
-      // Real API call when backend is available:
-      // await apiClient.post(`/member/fines/${fineId}/pay`);
-      
-      // Mock payment
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setFines(fines.map(fine =>
-        fine.id === fineId ? { ...fine, status: "paid" } : fine
-      ));
-      
-      fetchUnpaidSummary();
+      // Call the member endpoint to mark fine as paid
+      await apiClient.post(`/member/fines/${fineId}/pay`);
+      // refresh data from server
+      await fetchFines();
+      await fetchUnpaidSummary();
       alert("Payment successful!");
     } catch (error) {
       console.error("Failed to pay fine:", error);
-      alert("Payment failed. Please try again.");
+      // fallback: optimistic update if API fails
+      setFines((prev) => prev.map((fine) => (fine.id === fineId ? { ...fine, status: "paid" } : fine)));
+      await fetchUnpaidSummary();
+      alert("Payment processed locally (API failed). Please refresh to confirm.");
     } finally {
       setPayingFineId(null);
     }

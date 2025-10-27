@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
-import apiClient from "../utils/api";
+import apiClient from "../utils/api.js";
 
 const gambarlogin = new URL("../asset/gambarlogin.png", import.meta.url).href;
 
@@ -107,7 +107,7 @@ const Login = () => {
             <div className="password-wrapper">
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder=""
+                placeholder="***********"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
