@@ -1,12 +1,12 @@
-E-LIBRARY FRONTEND – REACT APPLICATION
-Kelompok: 
-Adinda Salsabila, 
-Meidiyana, 
-Keysha Dwi Nova Rohima, 
-M. Ayustio Riswansyah
+# E-LIBRARY FRONTEND – REACT APPLICATION
+## Kelompok: 
+### Adinda Salsabila as Backend Developer
+### Meidiyana as Frontend Developer
+### Keysha Dwi Nova Rohima as Frontend Developer
+### M. Ayustio Riswansyah as Frontend Developer
 
-Aplikasi frontend modern untuk sistem e-library berbasis React, terintegrasi mulus dengan Laravel Backend API. 
-Mendukung role Admin & Member, serta Mock Mode agar dapat berjalan tanpa backend aktif.
+Aplikasi frontend modern untuk sistem e-library berbasis React, terintegrasi dengan Laravel Backend API. 
+Mendukung role Admin & Member.
 
 ======================================================================
 CARA MENJALANKAN
@@ -17,7 +17,7 @@ Prasyarat
 - (Opsional) Backend Laravel berjalan di http://localhost:8000
 
 Instalasi & Development
-1) git clone <url-repo-anda>
+1) git clone https://github.com/RaionClaire/Library-Management-Frontend-React.git
 2) cd e-library
 3) npm install
 4) npm start
@@ -29,9 +29,7 @@ KONFIGURASI BACKEND
 ======================================================================
 Edit src/utils/api.js:
 
-- API_BASE_URL  = "http://localhost:8000/api"   (ubah sesuai URL backend)
-
-Jika USE_MOCK_MODE = true, aplikasi tetap berfungsi penuh (data hanya di memori/ sementara).
+- API_BASE_URL  = "http://localhost:8000/api"  
 
 ======================================================================
 FITUR UTAMA
@@ -52,7 +50,7 @@ Fitur Admin
 - Laporan: buku terpopuler, statistik peminjaman, member aktif, overdue, dsb.
 
 ======================================================================
-AUTENTIKASI (SANCTUM – RINGKAS)
+AUTENTIKASI (SANCTUM)
 ======================================================================
 - Login mengembalikan: { token, user { id, name, email, role } }
 - Simpan token & user di localStorage
