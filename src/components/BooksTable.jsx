@@ -161,7 +161,7 @@ const BooksTable = () => {
       {error && <div className="error-message">{error}</div>}
       
       {searchQuery && (
-        <div className="search-results-info">
+        <div classadmin menuName="search-results-info">
           Found {filteredBooks.length} book{filteredBooks.length !== 1 ? 's' : ''}
         </div>
       )}

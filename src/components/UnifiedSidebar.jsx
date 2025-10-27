@@ -16,6 +16,7 @@ import {
   Users,
   DollarSign,
   BookOpen,
+  FolderCog
 } from "lucide-react";
 import { FaBookOpenReader } from "react-icons/fa6";
 
@@ -108,6 +109,12 @@ const UnifiedSidebar = () => {
       icon: <Users />,
       roles: ["admin"],
     },
+    {
+      path: "/admin/reports",
+      label: "Reports",
+      icon: <ClipboardList />,
+      roles: ["admin"],
+    }
   ];
 
   const settingsItems = [
@@ -177,7 +184,7 @@ const UnifiedSidebar = () => {
             <>
               <li className="dropdown" onClick={handleManagementToggle}>
                 <span className="icon">
-                  <Settings />
+                  <FolderCog />
                 </span>
                 <span>Management</span>
                 {openManagement ? (

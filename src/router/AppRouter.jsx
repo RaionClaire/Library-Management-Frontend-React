@@ -27,13 +27,12 @@ import CategoriesTable from "../components/CategoriesTable.jsx";
 import LoansTable from "../components/LoansTable.jsx";
 import FinesTable from "../components/FinesTable.jsx";
 import UsersTable from "../components/UsersTable.jsx";
+import Reports from "../components/Reports.jsx";
 import AdminDashboard from "../pages/AdminDashboard.jsx";
 
-// Komponen pembungkus agar Sidebar bisa beradaptasi dengan route
 function AppRoutes() {
   const location = useLocation();
 
-  // Daftar halaman yang TIDAK menampilkan sidebar
   const hideSidebar = ["/", "/login", "/register", "/lupaPassword"].includes(
     location.pathname
   );
@@ -89,6 +88,7 @@ function AppRoutes() {
               <Route path="/admin/loans" element={<LoansTable />} />
               <Route path="/admin/fines" element={<FinesTable />} />
               <Route path="/admin/users" element={<UsersTable />} />
+              <Route path="/admin/reports" element={<Reports />} />
             </Route>
           </Route>
         </Routes>
